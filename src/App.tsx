@@ -1,25 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
+import { IntlProvider } from 'react-intl';
 import './App.css';
+import RenderRouter from './routes';
+import { HistoryRouter, history } from './routes/history';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
+  const messagesInFrench = {
+    myMessage: "Aujourd'hui, c'est le {ts, date, ::yyyyMMdd}",
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <IntlProvider locale="fr" defaultLocale="en" messages={messagesInFrench}>
+    <HistoryRouter history={history}>
+      <RenderRouter />
+    </HistoryRouter>
+  </IntlProvider>
   );
 }
 

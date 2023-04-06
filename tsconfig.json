@@ -1,26 +1,54 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "baseUrl": ".",
+    "outDir": "./lib/typescript",
+    "composite": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "jsx": "preserve",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
     "noEmit": true,
-    "jsx": "react-jsx"
+    "isolatedModules": true,
+    "allowJs": true
   },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "lib",
+    "base",
+    "server.ts",
+    "tsconfig.json",
+    "ComponentStick.tsx",
+    "customLog.ts"
+  ],
   "include": [
-    "src"
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.json",
+    "index.d.ts",
+    "index.js",
+    "src/features/Introduction/Components/Swiper.js",
+    ".storybook/Storybook.tsx",
+    "./.storybook/preview.js",
   ]
 }
