@@ -1,10 +1,11 @@
 import { Navigate } from 'react-router';
 import WrapperRouteComponent from './config';
 import { useRoutes } from 'react-router-dom';
-import LoginPage from '../pages/login';
+// import LoginPage from '../pages/login';
 import HomePage from '../pages/home';
 import ErrorPage from '../pages/errorPage';
 import type { FC } from 'react';
+import Layouts from 'src/pages/layouts';
 
 const routeList: any = [
   // {
@@ -13,7 +14,7 @@ const routeList: any = [
   // },
   {
     path: '/',
-    element: <WrapperRouteComponent element={<LoginPage />} titleId="" />,
+    element: <WrapperRouteComponent element={<Layouts />} titleId="" />,
     children: [
       {
         path: '',
