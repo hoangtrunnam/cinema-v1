@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -6,6 +7,12 @@ import Button from "react-bootstrap/Button";
 import { IMAGES } from "src/assets/header";
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -51,6 +58,7 @@ const HeaderComponent = () => {
         <Button
           style={{ width: "120px", marginRight: "10px" }}
           variant="primary"
+          onClick={handleNavigateLogin}
         >
           Đăng nhập
         </Button>

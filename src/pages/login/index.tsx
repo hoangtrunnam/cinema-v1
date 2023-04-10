@@ -73,7 +73,6 @@ const LoginPage = () => {
                 id="flexCheckDefault"
                 label="Remember me"
               />
-              <a href="!#">Forgot password?</a>
             </div>
 
             <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
