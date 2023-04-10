@@ -6,6 +6,8 @@ import HomePage from '../pages/home';
 import ErrorPage from '../pages/errorPage';
 import type { FC } from 'react';
 import Layouts from 'src/pages/layouts';
+import Card from 'src/pages/card';
+import LoginPage from 'src/pages/login';
 
 const routeList: any = [
   // {
@@ -21,8 +23,16 @@ const routeList: any = [
         element: <Navigate to="dashboard" />,
       },
       {
+        path: '/login',
+        element: <WrapperRouteComponent element={<LoginPage />} titleId="home-page" />,
+      },
+      {
         path: '/homePage',
         element: <WrapperRouteComponent element={<HomePage />} titleId="home-page" />,
+      },
+      {
+        path: '/card',
+        element: <WrapperRouteComponent element={<Card />} titleId="card" />,
       },
       {
         path: '*',

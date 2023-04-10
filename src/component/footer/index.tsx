@@ -5,7 +5,7 @@ const Footer = () => {
     <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
       <section className='d-flex justify-content-center justify-content-lg-between p-4 border-bottom'>
         <div className='me-5 d-none d-lg-block'>
-          <span>Get connected with us on social networks:</span>
+          <span>Liên hệ với chúng tôi qua các nền tảng mạng xã hội:</span>
         </div>
 
         <div>
@@ -36,77 +36,71 @@ const Footer = () => {
             <MDBCol md="3" lg="4" xl="3" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>
                 <MDBIcon icon="gem" className="me-3" />
-                Company name
+                Cinema Team
               </h6>
               <p>
-                Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit.
+                Cinema Team được biết đến với cụm rạp đầu tiên với 3 phòng chiếu vào năm 2022, tại Maximark 3/2 (nay là Vincom 3/2). Từ 2013, Cinema Team là cụm rạp của doanh nghiệp Việt Nam duy nhất có sức phát triển mạnh mẽ, qua việc liên tục mở thêm các phòng chiếu mới.
               </p>
             </MDBCol>
 
             <MDBCol md="2" lg="2" xl="2" className='mx-auto mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Products</h6>
+              <h6 className='text-uppercase fw-bold mb-4'>Sản phẩm</h6>
               <p>
                 <a href='#!' className='text-reset'>
-                  Angular
+                  Đặt vé phim
                 </a>
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  React
+                  Siêu voucher hấp dẫn
                 </a>
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  Vue
-                </a>
-              </p>
-              <p>
-                <a href='#!' className='text-reset'>
-                  Laravel
+                  Dịch vụ quảng cáo
                 </a>
               </p>
             </MDBCol>
 
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
+              <h6 className='text-uppercase fw-bold mb-4'>Thường dùng</h6>
               <p>
                 <a href='#!' className='text-reset'>
-                  Pricing
+                  Giá cả
                 </a>
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  Settings
+                  Cài đặt
                 </a>
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  Orders
+                  Đặt vé
                 </a>
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  Help
+                  Trung tâm trợ giúp
                 </a>
               </p>
             </MDBCol>
 
             <MDBCol md="4" lg="3" xl="3" className='mx-auto mb-md-0 mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Contact</h6>
+              <h6 className='text-uppercase fw-bold mb-4'>Liên hệ</h6>
               <p>
                 <MDBIcon icon="home" className="me-2" />
-                New York, NY 10012, US
+                55 Giải phóng, Hai Bà Trưng, TP Hà Nội
               </p>
               <p>
                 <MDBIcon icon="envelope" className="me-3" />
-                info@example.com
+                contactme@cinemateam.com.vn
               </p>
               <p>
-                <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
+                <MDBIcon icon="phone" className="me-3" /> + 84 234 567 887
               </p>
               <p>
-                <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
+                <MDBIcon icon="print" className="me-3" /> + 84 234 567 896
               </p>
             </MDBCol>
           </MDBRow>
@@ -114,9 +108,9 @@ const Footer = () => {
       </section>
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-        © 2021 Copyright:
+        © 2023 Copyright:
         <a className='text-reset fw-bold' href='https://mdbootstrap.com/'>
-          MDBootstrap.com
+          cinemateam.com
         </a>
       </div>
     </MDBFooter>
