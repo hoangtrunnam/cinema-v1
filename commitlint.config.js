@@ -1,22 +1,22 @@
 /* eslint-disable semi */
 module.exports = {
-  extends: ['@commitlint/config-conventional'],
+  extends: ["@commitlint/config-conventional"],
   rules: {
-    'type-enum': [
+    "type-enum": [
       2,
-      'always',
+      "always",
       [
-        'feat',
-        'fix',
-        'docs',
-        'style',
-        'refactor',
-        'test',
-        'revert',
-        'add',
-        'chore',
-        'build',
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "test",
+        "revert",
+        "add",
+        "chore",
+        "build",
       ],
     ],
   },
-}
+};

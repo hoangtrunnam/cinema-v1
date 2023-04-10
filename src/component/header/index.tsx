@@ -1,9 +1,9 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
-import { IMAGES } from 'src/assets/header';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
+import { IMAGES } from "src/assets/header";
 
 const HeaderComponent = () => {
   return (
@@ -27,9 +27,7 @@ const HeaderComponent = () => {
               <NavDropdown.Item href="#action/3.4">
                 Dịch vụ quảng cáo
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.5">
-                Tuyển dụng
-              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.5">Tuyển dụng</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.6">
                 Về chúng tôi
               </NavDropdown.Item>
@@ -38,14 +36,27 @@ const HeaderComponent = () => {
         </Navbar.Collapse>
       </Container>
       <Navbar.Collapse className="justify-content-end">
-        <img style={{marginRight: '10px'}} src={IMAGES.iconIns} alt='my instagram'/>
-        <img style={{marginRight: '10px'}} src={IMAGES.iconTk} alt='my tiktok'/>
-        <img style={{marginRight: '10px'}} src={IMAGES.iconYt} alt='my yt'/>
-        <img style={{marginRight: '10px'}} src={IMAGES.iconFb} alt='my fb'/>
-        <Button style={{width: '120px', marginRight: '10px'}} variant="primary">Đăng nhập</Button>
+        <img
+          style={{ marginRight: "10px" }}
+          src={IMAGES.iconIns}
+          alt="my instagram"
+        />
+        <img
+          style={{ marginRight: "10px" }}
+          src={IMAGES.iconTk}
+          alt="my tiktok"
+        />
+        <img style={{ marginRight: "10px" }} src={IMAGES.iconYt} alt="my yt" />
+        <img style={{ marginRight: "10px" }} src={IMAGES.iconFb} alt="my fb" />
+        <Button
+          style={{ width: "120px", marginRight: "10px" }}
+          variant="primary"
+        >
+          Đăng nhập
+        </Button>
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
 
-export default HeaderComponent
+export default HeaderComponent;

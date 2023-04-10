@@ -1,7 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse, CancelTokenSource } from 'axios'
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  CancelTokenSource,
+} from "axios";
 
-const { CancelToken } = axios
-const source = CancelToken.source()
+const { CancelToken } = axios;
+const source = CancelToken.source();
 
 /**
  * tạo ra 1 func request api dựa vào axios
@@ -21,18 +25,19 @@ export const createRequest = (baseUrl: string, timeout: number) => {
      * @returns {string}
      */
     const withTimestamp = (url: string) => {
-      const joinCharacter = url.includes('?') ? '&' : '?'
-      return `${url}${joinCharacter}timestamp=${Date.now()}`
-    }
+      const joinCharacter = url.includes("?") ? "&" : "?";
+
+      return `${url}${joinCharacter}timestamp=${Date.now()}`;
+    };
 
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: '', // add new
-    }
-    // @ts-ignore
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "", // add new
+    };
+
     if (authToken && !isCDNApi) {
-      headers.Authorization = `Bearer ${authToken}`
+      headers.Authorization = `Bearer ${authToken}`;
     }
 
     const defaultOptions: AxiosRequestConfig = {
@@ -40,14 +45,17 @@ export const createRequest = (baseUrl: string, timeout: number) => {
       baseURL: baseUrl,
       timeout,
       cancelToken: cancelToken ? cancelToken.token : source.token,
-    }
+    };
 
     return {
       /**
        * func get
        * override option request
        */
-      get: <T = any, R = AxiosResponse<T>>(url: string, options: AxiosRequestConfig = {}) =>
+      get: <T = any, R = AxiosResponse<T>>(
+        url: string,
+        options: AxiosRequestConfig = {}
+      ) =>
         axios.get<T, R>(isCDNApi ? withTimestamp(url) : url, {
           // ...options.params,
           ...defaultOptions,
@@ -73,7 +81,7 @@ export const createRequest = (baseUrl: string, timeout: number) => {
             ...defaultOptions.headers,
             ...options?.headers,
           },
-        })
+        });
       },
       /**
        * func put
@@ -131,6 +139,6 @@ export const createRequest = (baseUrl: string, timeout: number) => {
             ...options?.headers,
           },
         }),
-    }
-  }
-}
+    };
+  };
+};

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Footer from 'src/component/footer'
-import HeaderComponent from 'src/component/header'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "src/component/footer";
+import HeaderComponent from "src/component/header";
 
 const Layouts = () => {
   return (
@@ -14,7 +14,7 @@ const Layouts = () => {
         <Footer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layouts
+export default Layouts;

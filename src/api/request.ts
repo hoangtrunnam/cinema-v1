@@ -1,6 +1,6 @@
-import { baseUrl, timeout } from './config'
-import { createRequest } from './core'
+import { baseUrl, timeout } from "./config";
+import { createRequest } from "./core";
 
-const request = createRequest(baseUrl, timeout)
+const request = createRequest(baseUrl, timeout);
 
-export default request
+export default request;
