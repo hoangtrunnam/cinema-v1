@@ -9,19 +9,24 @@ import { useState } from "react";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(true);
 
   const handleNavigateLogin = () => {
     navigate("/login");
   };
 
-  const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(true);
+  const handleNavigateToHome = () => {
+    navigate("/homePage");
+  };
+
+  const handleNavigateToUserProfile = () => {
+    navigate("/userProfile");
+  };
 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="http://localhost:3000/homePage">
-          Cinema Team
-        </Navbar.Brand>
+        <Navbar.Brand onClick={handleNavigateToHome}>Cinema Team</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -55,7 +60,8 @@ const HeaderComponent = () => {
           <MDBTypography style={{ width: "max-content" }}>
             Xin chào&nbsp;
             <a
-              href="http://localhost:3000/userProfile"
+              // href="http://localhost:3000/userProfile"
+              onClick={handleNavigateToUserProfile}
               style={{ textDecoration: "underline" }}
             >
               Hoang Trung Nam

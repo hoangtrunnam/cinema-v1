@@ -1,4 +1,5 @@
 // export const enviromentConfig = require('../enviroment/develop.json')
+export const baseDomain = "https://cinema-team.asia";
 
 export const baseUrl = "https://selfcare.vietnamobile.com.vn"; // staging
 

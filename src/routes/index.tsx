@@ -27,7 +27,7 @@ const routeList: any = [
     children: [
       {
         path: "",
-        element: <Navigate to="dashboard" />,
+        element: <Navigate to="homePage" />,
       },
       {
         path: "/login",
