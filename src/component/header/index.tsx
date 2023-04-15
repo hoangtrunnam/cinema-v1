@@ -4,7 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
-import { IMAGES } from "src/assets/header";
+import { MDBTypography } from "mdb-react-ui-kit";
+import { useState } from "react";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
@@ -13,10 +14,14 @@ const HeaderComponent = () => {
     navigate("/login");
   };
 
+  const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(true);
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Cinema Team</Navbar.Brand>
+        <Navbar.Brand href="http://localhost:3000/homePage">
+          Cinema Team
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -42,26 +47,29 @@ const HeaderComponent = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <Navbar.Collapse className="justify-content-end">
-        <img
-          style={{ marginRight: "10px" }}
-          src={IMAGES.iconIns}
-          alt="my instagram"
-        />
-        <img
-          style={{ marginRight: "10px" }}
-          src={IMAGES.iconTk}
-          alt="my tiktok"
-        />
-        <img style={{ marginRight: "10px" }} src={IMAGES.iconYt} alt="my yt" />
-        <img style={{ marginRight: "10px" }} src={IMAGES.iconFb} alt="my fb" />
-        <Button
-          style={{ width: "120px", marginRight: "10px" }}
-          variant="primary"
-          onClick={handleNavigateLogin}
-        >
-          Đăng nhập
-        </Button>
+      <Navbar.Collapse
+        className="justify-content-end"
+        style={{ paddingRight: "16px" }}
+      >
+        {isLoggedIn ? (
+          <MDBTypography style={{ width: "max-content" }}>
+            Xin chào&nbsp;
+            <a
+              href="http://localhost:3000/userProfile"
+              style={{ textDecoration: "underline" }}
+            >
+              Hoang Trung Nam
+            </a>
+          </MDBTypography>
+        ) : (
+          <Button
+            style={{ width: "120px", marginRight: "10px" }}
+            variant="primary"
+            onClick={handleNavigateLogin}
+          >
+            Đăng nhập
+          </Button>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );

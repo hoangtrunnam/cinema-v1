@@ -8,6 +8,13 @@ import type { FC } from "react";
 import Layouts from "src/pages/layouts";
 import Card from "src/pages/card";
 import LoginPage from "src/pages/login";
+import UserProfile from "src/pages/userProfile";
+
+// and then replace history.push('/path') with navigate('/path')
+
+// Change history.replace('/path') with navigate('/path', { replace: true })
+
+// Want to use state in push/navigate do navigate('/path', { state: { name:'Xyz' }})
 
 const routeList: any = [
   // {
@@ -37,6 +44,12 @@ const routeList: any = [
       {
         path: "/card",
         element: <WrapperRouteComponent element={<Card />} titleId="card" />,
+      },
+      {
+        path: "/userProfile",
+        element: (
+          <WrapperRouteComponent element={<UserProfile />} titleId="card" />
+        ),
       },
       {
         path: "*",
