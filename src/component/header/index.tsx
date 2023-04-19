@@ -64,7 +64,7 @@ const HeaderComponent = () => {
               onClick={handleNavigateToUserProfile}
               style={{ textDecoration: "underline" }}
             >
-              Hoang Trung Nam
+              Hoang Trung Nam1
             </a>
           </MDBTypography>
         ) : (
