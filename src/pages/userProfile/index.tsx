@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import "./index.less";
 import {
   MDBContainer,
@@ -12,21 +12,75 @@ import {
   MDBInput,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import { getDetailUserInfo, postUpdateProfile } from "src/api/auth";
+import { IUserInfoDetails } from "src/types/auth";
 
 const UserProfile = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [editable, setEditable] = useState<boolean>(true);
-  const [bithDay, setBirthDay] = useState<string>("2021-04-29");
-  const [fullName, setFullName] = useState<string>("Hoang Trung Nam");
-  const [email, setEmail] = useState<string>("hoangtrungnam0000@gmail.com");
-  const [phoneNumber, setPhoneNumber] = useState<string>("0123456789");
-  const [address, setAddress] = useState<string>("Ha Noi - VietNam");
 
-  const handleSaveInfoProfile = () => {
-    setEditable(true);
-    navigate("/homePage", { replace: true });
+  const [userInfo, setUserInfo] = useState<IUserInfoDetails>({
+    id: -1,
+    name: "",
+    image: "",
+    address: "",
+    phone: "",
+    doB: "",
+    sex: false,
+    email: "",
+  });
+
+  const handleUpdateProfile = async () => {
+    if (editable === false) {
+      const res = await postUpdateProfile(userInfo);
+
+      if (res.code === 200 && res.status) {
+        alert("updated thông tin thành công");
+        const { id, name, image, address, phone, doB, sex, email } = res;
+
+        setUserInfo({
+          id,
+          name,
+          image,
+          address,
+          phone,
+          doB,
+          sex,
+          email,
+        });
+        setEditable(true);
+        // navigate("/homePage", { replace: true });
+      } else {
+        alert(`Có lỗi xảy ra, vui lòng thử lại! ${res.message}`);
+      }
+    } else {
+      alert("Vui lòng nhập thông tin muốn thay đổi");
+    }
   };
+
+  const handleGetDetailUserInfo = useCallback(async () => {
+    const res = await getDetailUserInfo();
+
+    if (res.code === 200 && res.status) {
+      setUserInfo(res.data);
+    } else {
+      setUserInfo({
+        id: -1,
+        name: "",
+        image: "",
+        address: "",
+        phone: "",
+        doB: "",
+        sex: false,
+        email: "",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    handleGetDetailUserInfo();
+  }, []);
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
@@ -36,13 +90,17 @@ const UserProfile = () => {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={
+                    userInfo.image === ""
+                      ? "https://res.cloudinary.com/vitcamo/image/upload/v1681832133/51402136-39f0-4e56-9083-37c90653fdcb.jpg"
+                      : userInfo.image
+                  }
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}
                   fluid
                 />
-                <p className="text-muted mb-1">{fullName}</p>
+                <p className="text-muted mb-1">{userInfo.name}</p>
                 <p className="text-muted mb-4">Thành viên hạng vàng</p>
               </MDBCardBody>
             </MDBCard>
@@ -70,8 +128,10 @@ const UserProfile = () => {
                       label="Full Name"
                       id="form1"
                       type="text"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
+                      value={userInfo.name}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, name: e.target.value })
+                      }
                     />
                   </MDBCol>
                 </MDBRow>
@@ -82,9 +142,11 @@ const UserProfile = () => {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBInput
-                      disabled={editable}
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
+                      disabled
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, email: e.target.value })
+                      }
+                      value={userInfo.email}
                       label="Email"
                       id="form1"
                       type="email"
@@ -99,8 +161,10 @@ const UserProfile = () => {
                   <MDBCol sm="9">
                     <MDBInput
                       disabled={editable}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      value={phoneNumber}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, phone: e.target.value })
+                      }
+                      value={userInfo.phone}
                       label="Phone Number"
                       id="form1"
                       type="text"
@@ -114,12 +178,14 @@ const UserProfile = () => {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBInput
-                      disabled={editable}
+                      disabled
                       label="Birthday"
                       id="form1"
                       type="date"
-                      value={bithDay}
-                      onChange={(e) => setBirthDay(e.target.value)}
+                      value={userInfo?.doB?.slice(0, 10) || ""}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, doB: e.target.value })
+                      }
                     />
                   </MDBCol>
                 </MDBRow>
@@ -134,13 +200,15 @@ const UserProfile = () => {
                       label="Address"
                       id="form1"
                       type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      value={userInfo.address}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, address: e.target.value })
+                      }
                     />
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
-              <MDBBtn disabled={editable} onClick={handleSaveInfoProfile}>
+              <MDBBtn disabled={editable} onClick={handleUpdateProfile}>
                 Lưu
               </MDBBtn>
             </MDBCard>
