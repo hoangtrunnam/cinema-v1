@@ -93,8 +93,6 @@ const LoginPage = () => {
       setErrorEmpty("");
       const res = await handleSignUpUser(dataRegiser);
 
-      console.log("res", res);
-
       if (res.code === 200 && res.status) {
         alert("Đăng ký thành công");
         setJustifyActive("tab1");
@@ -109,8 +107,6 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (dataLogin.email !== "" && dataLogin.password !== "") {
       const res = await handleLoginUser(dataLogin);
-
-      console.log("res haha", res);
 
       if (res.code === 200 && res.status) {
         alert("Đăng nhập thành công");
@@ -133,13 +129,11 @@ const LoginPage = () => {
 
     reader.onload = () => {
       // const binaryStr = reader.result;
-      const binaryStr = new Uint8Array(
-        reader?.result ? reader?.result : ("" as any)
-      );
-
+      // const binaryStr = new Uint8Array(
+      //   reader?.result ? reader?.result : ("" as any)
+      // );
       // const binaryString = String.fromCharCode.apply(null, binaryStr);
-
-      console.log(binaryStr);
+      // console.log(binaryStr);
       // Gửi binaryStr lên cho backend để xử lý
       // setDataRegiser({
       //   ...dataRegiser,

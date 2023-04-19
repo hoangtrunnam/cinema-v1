@@ -102,8 +102,6 @@ export const handleLoginUser = async (
 
     const res = await request().post(apiLoginUser, body);
 
-    console.log("res", res);
-
     // res dựa trên api response để define
     const { status, data, code, message } = res.data;
 
@@ -122,8 +120,6 @@ export const getDetailUserInfo = async (): Promise<ApiResponse<any>> => {
   try {
     const token = await getToken();
     const res = await request(token).get(apiGetDetailUser);
-
-    console.log("res", res);
 
     const { status, data, code, message } = res.data;
 
