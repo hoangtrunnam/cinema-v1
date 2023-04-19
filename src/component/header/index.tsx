@@ -5,11 +5,18 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import { MDBTypography } from "mdb-react-ui-kit";
-import { useState } from "react";
+// import { useRecoilValue } from "recoil";
+// import { userInfoState } from "src/recoil/auth/atom";
+// import { isUserLoggedInSelector } from "src/recoil/auth/selector";
+import { useCookie } from "src/hooks/useCookie";
+import { CookiesEnum, IUserLogin } from "src/types/auth";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(true);
+  // const userInfo = useRecoilValue(userInfoState);
+  // const isLoggedIn = useRecoilValue(isUserLoggedInSelector);
+
+  const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
 
   const handleNavigateLogin = () => {
     navigate("/login");
@@ -56,7 +63,7 @@ const HeaderComponent = () => {
         className="justify-content-end"
         style={{ paddingRight: "16px" }}
       >
-        {isLoggedIn ? (
+        {dataCookie?.username ? (
           <MDBTypography style={{ width: "max-content" }}>
             Xin chào&nbsp;
             <a
@@ -64,7 +71,7 @@ const HeaderComponent = () => {
               onClick={handleNavigateToUserProfile}
               style={{ textDecoration: "underline" }}
             >
-              Hoang Trung Nam1
+              {dataCookie.username || ""}
             </a>
           </MDBTypography>
         ) : (

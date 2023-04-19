@@ -1,6 +1,6 @@
 import Cookies from "universal-cookie";
 
-type ICookie = "users" | "token" | "usersSelfCare";
+type ICookie = "users" | "token" | "usersSelfCare" | "USER_INFO";
 
 export function useCookie<T>(nameCookie: ICookie) {
   const cookies = new Cookies();

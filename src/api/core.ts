@@ -3,6 +3,8 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from "axios";
+import { useCookie } from "src/hooks/useCookie";
+import { CookiesEnum, IUserLogin } from "src/types/auth";
 
 const { CancelToken } = axios;
 const source = CancelToken.source();
@@ -31,7 +33,7 @@ export const createRequest = (baseUrl: string, timeout: number) => {
     };
 
     const headers = {
-      Accept: "application/json",
+      // Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "", // add new
     };
@@ -141,4 +143,13 @@ export const createRequest = (baseUrl: string, timeout: number) => {
         }),
     };
   };
+};
+
+export const getToken = async () => {
+  const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
+
+  if (dataCookie && dataCookie.accessToken !== "") {
+    return dataCookie.accessToken;
+  }
+  return "";
 };
