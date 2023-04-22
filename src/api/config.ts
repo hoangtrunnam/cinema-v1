@@ -3,9 +3,9 @@ export const baseDomain = "https://cinema-team.asia";
 
 // export const baseUrl = "https://selfcare.vietnamobile.com.vn"; // staging
 
-// export const baseUrl = " https://api-standby-test.somee.com"; // release
+export const baseUrl = "https://cinema-api-vzrcoixrua-as.a.run.app"; // release
 
-export const baseUrl = "https://localhost:5001"; // local
+// export const baseUrl = "https://localhost:5001"; // local
 
 export const timeout = 30000;
 

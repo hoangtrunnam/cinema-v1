@@ -133,12 +133,14 @@ const HomePage = () => {
       <MDBCarousel showIndicators showControls fade dealy={2000}>
         {listCarouselBanner.map((carousel: IListCarouselBanner) => {
           return (
-            <MDBCarouselItem
-              className="w-100 d-block"
-              itemId={carousel.id}
-              src={carousel.src}
-              alt={carousel.alt}
-            />
+            <div key={carousel.id}>
+              <MDBCarouselItem
+                className="w-100 d-block"
+                itemId={carousel.id}
+                src={carousel.src}
+                alt={carousel.alt}
+              />
+            </div>
           );
         })}
       </MDBCarousel>
@@ -164,7 +166,6 @@ const HomePage = () => {
           PHIM ĐANG CHIẾU
         </h3>
         <h3
-          className="typeFilm"
           style={{ cursor: "pointer", color: "black", paddingRight: "16px" }}
           onMouseEnter={(e: React.MouseEvent<HTMLHeadingElement>) =>
             ((e.target as HTMLHeadingElement).style.color = "#d4dd29")
@@ -204,6 +205,7 @@ const HomePage = () => {
                     flex: 1,
                     marginLeft: "23%",
                   }}
+                  key={film.id}
                 >
                   <Card style={{ width: "18rem" }}>
                     <Card.Img variant="top" src={film.src} />

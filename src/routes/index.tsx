@@ -23,7 +23,7 @@ const routeList: any = [
   // },
   {
     path: "/",
-    element: <WrapperRouteComponent element={<Layouts />} titleId="" />,
+    element: <WrapperRouteComponent element={<Layouts />} titleId="layout" />,
     children: [
       {
         path: "",
@@ -32,7 +32,7 @@ const routeList: any = [
       {
         path: "/login",
         element: (
-          <WrapperRouteComponent element={<LoginPage />} titleId="home-page" />
+          <WrapperRouteComponent element={<LoginPage />} titleId="login" />
         ),
       },
       {
@@ -48,7 +48,10 @@ const routeList: any = [
       {
         path: "/userProfile",
         element: (
-          <WrapperRouteComponent element={<UserProfile />} titleId="card" />
+          <WrapperRouteComponent
+            element={<UserProfile />}
+            titleId="my-profile"
+          />
         ),
       },
       {
