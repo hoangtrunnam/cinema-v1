@@ -2,21 +2,12 @@
 import { useState } from "react";
 import "./index.less";
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import CarouselFilm from "./component/CarouselFilm";
+import CarouselKM from "./component/CarouselKM";
 interface IListCarouselBanner {
   id: number;
   src: string;
   alt: string;
-}
-
-interface IListFilm {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
 }
 
 const listCarouselBanner: IListCarouselBanner[] = [
@@ -47,78 +38,6 @@ const listCarouselBanner: IListCarouselBanner[] = [
   },
 ];
 
-const listFilm: IListFilm[] = [
-  {
-    id: 1,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002679?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 2,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002629?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 3,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 4,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 5,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 6,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-
-  {
-    id: 7,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 8,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-];
-
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
-
 const HomePage = () => {
   // const navigate = useNavigate();
 
@@ -127,6 +46,7 @@ const HomePage = () => {
   // };
 
   const [typeFile, setTypeFilm] = useState<string>("playing");
+  const [typeKM, setTypeKM] = useState<string>("KM");
 
   return (
     <div className="login-page">
@@ -178,52 +98,42 @@ const HomePage = () => {
           PHIM SẮP CHIẾU
         </h3>
       </div>
-      {typeFile === "playing" ? (
-        <div
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      {typeFile === "playing" ? <CarouselFilm /> : <CarouselFilm />}
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "32px",
+        }}
+      >
+        <h3
+          style={{ cursor: "pointer", color: "black", paddingRight: "16px" }}
+          onMouseEnter={(e: React.MouseEvent<HTMLHeadingElement>) =>
+            ((e.target as HTMLHeadingElement).style.color = "#d4dd29")
+          }
+          onMouseLeave={(e: React.MouseEvent<HTMLHeadingElement>) =>
+            ((e.target as HTMLHeadingElement).style.color = "black")
+          }
+          onClick={() => setTypeKM("KM")}
         >
-          <Carousel
-            swipeable={false}
-            draggable={false}
-            showDots={true}
-            responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlaySpeed={1000}
-            keyBoardControl={true}
-            customTransition="all .5"
-            transitionDuration={500}
-            containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {listFilm.map((film) => {
-              return (
-                <div
-                  style={{
-                    flex: 1,
-                    marginLeft: "23%",
-                  }}
-                  key={film.id}
-                >
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Img variant="top" src={film.src} />
-                    <Card.Body>
-                      <Card.Title>{film.title}</Card.Title>
-                      <Button variant="primary">Đặt vé</Button>
-                    </Card.Body>
-                  </Card>
-                </div>
-              );
-            })}
-          </Carousel>
-        </div>
-      ) : (
-        <div>
-          <p>phim sap chieu</p>
-        </div>
-      )}
+          KHUYẾN MÃI
+        </h3>
+        <h3
+          style={{ cursor: "pointer", color: "black", paddingRight: "16px" }}
+          onMouseEnter={(e: React.MouseEvent<HTMLHeadingElement>) =>
+            ((e.target as HTMLHeadingElement).style.color = "#d4dd29")
+          }
+          onMouseLeave={(e: React.MouseEvent<HTMLHeadingElement>) =>
+            ((e.target as HTMLHeadingElement).style.color = "black")
+          }
+          onClick={() => setTypeKM("SK")}
+        >
+          SỰ KIỆN
+        </h3>
+      </div>
+      {typeKM === "KM" ? <CarouselKM /> : <CarouselKM />}
     </div>
   );
 };
