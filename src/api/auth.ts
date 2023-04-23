@@ -142,8 +142,6 @@ export const postUpdateProfile = async (
 
     const { name, phone, address, image } = dataUpdate;
 
-    dataUpdate.image = "";
-
     const formData = new FormData();
 
     formData.append("name", name);

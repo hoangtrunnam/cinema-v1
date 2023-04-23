@@ -9,6 +9,7 @@ import Layouts from "src/pages/layouts";
 import Card from "src/pages/card";
 import LoginPage from "src/pages/login";
 import UserProfile from "src/pages/userProfile";
+import DetailFilm from "src/pages/detailFilm";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -39,6 +40,15 @@ const routeList: any = [
         path: "/homePage",
         element: (
           <WrapperRouteComponent element={<HomePage />} titleId="home-page" />
+        ),
+      },
+      {
+        path: "/detailFilm",
+        element: (
+          <WrapperRouteComponent
+            element={<DetailFilm />}
+            titleId="detail-film"
+          />
         ),
       },
       {

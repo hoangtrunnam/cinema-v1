@@ -1,5 +1,5 @@
 // import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import "./index.less";
 import {
   MDBContainer,
@@ -11,6 +11,7 @@ import {
   MDBCardText,
   MDBInput,
   MDBBtn,
+  MDBFile,
 } from "mdb-react-ui-kit";
 import { getDetailUserInfo, postUpdateProfile } from "src/api/auth";
 import { IUserInfoDetails } from "src/types/auth";
@@ -81,6 +82,23 @@ const UserProfile = () => {
   useEffect(() => {
     handleGetDetailUserInfo();
   }, []);
+
+  const handleChooseAvatar = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        const binaryString = event.target?.result as string;
+
+        setUserInfo({ ...userInfo, image: binaryString });
+      };
+      reader.readAsBinaryString(file);
+    } else {
+      alert("Không tìm thấy file ảnh");
+    }
+  };
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
@@ -204,6 +222,19 @@ const UserProfile = () => {
                       onChange={(e) =>
                         setUserInfo({ ...userInfo, address: e.target.value })
                       }
+                    />
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Ảnh đại diện</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBFile
+                      label=""
+                      id="customFile"
+                      onChange={handleChooseAvatar}
                     />
                   </MDBCol>
                 </MDBRow>
