@@ -87,14 +87,16 @@ const UserProfile = () => {
     const file = event.target.files ? event.target.files[0] : null;
 
     if (file) {
-      const reader = new FileReader();
+      // const reader = new FileReader();
 
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        const binaryString = event.target?.result as string;
+      // reader.onload = (event: ProgressEvent<FileReader>) => {
+      //   const binaryString = event.target?.result as string;
 
-        setUserInfo({ ...userInfo, image: binaryString });
-      };
-      reader.readAsBinaryString(file);
+      //   setUserInfo({ ...userInfo, image: binaryString });
+      // };
+      console.log("file", file);
+      setUserInfo({ ...userInfo, image: file });
+      // reader.readAsBinaryString(file);
     } else {
       alert("Không tìm thấy file ảnh");
     }
