@@ -10,6 +10,7 @@ import Card from "src/pages/card";
 import LoginPage from "src/pages/login";
 import UserProfile from "src/pages/userProfile";
 import DetailFilm from "src/pages/detailFilm";
+import PickSeat from "src/pages/pickSeat";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -49,6 +50,12 @@ const routeList: any = [
             element={<DetailFilm />}
             titleId="detail-film"
           />
+        ),
+      },
+      {
+        path: "/pick-seat/:idShowTime",
+        element: (
+          <WrapperRouteComponent element={<PickSeat />} titleId="pick-seat" />
         ),
       },
       {

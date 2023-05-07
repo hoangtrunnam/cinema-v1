@@ -16,7 +16,9 @@ const HeaderComponent = () => {
   // const userInfo = useRecoilValue(userInfoState);
   // const isLoggedIn = useRecoilValue(isUserLoggedInSelector);
 
-  const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
+  const { dataCookie, removeCookie } = useCookie<IUserLogin>(
+    CookiesEnum.USER_INFO
+  );
 
   const handleNavigateLogin = () => {
     navigate("/login");
@@ -28,6 +30,11 @@ const HeaderComponent = () => {
 
   const handleNavigateToUserProfile = () => {
     navigate("/userProfile");
+  };
+
+  const handleNavigateLogout = () => {
+    removeCookie();
+    navigate("/login");
   };
 
   return (
@@ -71,8 +78,15 @@ const HeaderComponent = () => {
               onClick={handleNavigateToUserProfile}
               style={{ textDecoration: "underline" }}
             >
-              {dataCookie.username || ""}
+              {dataCookie?.username || ""}
             </a>
+            <Button
+              style={{ width: "120px", marginRight: "10px" }}
+              variant="primary"
+              onClick={handleNavigateLogout}
+            >
+              Đăng Xuất
+            </Button>
           </MDBTypography>
         ) : (
           <Button
