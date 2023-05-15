@@ -1,9 +1,12 @@
 // import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.less";
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import CarouselFilm from "./component/CarouselFilm";
 import CarouselKM from "./component/CarouselKM";
+import { getListFilm } from "src/api/film";
+import { useRecoilState } from "recoil";
+import { listAllFilmState } from "src/recoil/film/atom";
 interface IListCarouselBanner {
   id: number;
   src: string;
@@ -47,6 +50,22 @@ const HomePage = () => {
 
   const [typeFile, setTypeFilm] = useState<string>("playing");
   const [typeKM, setTypeKM] = useState<string>("KM");
+
+  const [listFilm, setListFilm] = useRecoilState(listAllFilmState);
+
+  const handleGetListfilm = async () => {
+    const res = await getListFilm();
+
+    if (res.statusCode === 200 && Array.isArray(res.data)) {
+      setListFilm(res.data);
+    } else {
+      setListFilm([]);
+    }
+  };
+
+  useEffect(() => {
+    handleGetListfilm();
+  }, []);
 
   return (
     <div className="login-page">
@@ -98,7 +117,11 @@ const HomePage = () => {
           PHIM SẮP CHIẾU
         </h3>
       </div>
-      {typeFile === "playing" ? <CarouselFilm /> : <CarouselFilm />}
+      {typeFile === "playing" ? (
+        <CarouselFilm listFilm={listFilm} />
+      ) : (
+        <CarouselFilm listFilm={listFilm} />
+      )}
       <div
         style={{
           display: "flex",
