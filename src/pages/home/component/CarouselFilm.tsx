@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
+import { IAllFilm } from "src/recoil/film/atom";
 
 const responsive = {
   superLargeDesktop: {
@@ -26,66 +27,64 @@ const responsive = {
 };
 
 interface IListFilm {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
+  listFilm: IAllFilm[];
 }
-const listFilm: IListFilm[] = [
-  {
-    id: 1,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002679?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 2,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002629?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 3,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 4,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 5,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 6,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
+// const listFilm: IListFilm[] = [
+//   {
+//     id: 1,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002679?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 2,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002629?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 3,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 4,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 5,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 6,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
 
-  {
-    id: 7,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 8,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-];
-const CarouselFilm = () => {
+//   {
+//     id: 7,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+//   {
+//     id: 8,
+//     src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
+//     alt: "1 slide",
+//     title: "CATS IN THE MUSEUM",
+//   },
+// ];
+const CarouselFilm = (props: IListFilm) => {
+  const { listFilm } = props;
   const navigate = useNavigate();
-  const handleOrderTicket = () => {
-    navigate("/detailFilm");
+  const handleOrderTicket = (idFilm: number) => {
+    navigate(`/detailFilm/${idFilm}`);
   };
 
   return (
@@ -116,10 +115,19 @@ const CarouselFilm = () => {
               key={film.id}
             >
               <Card style={{ width: "18rem" }}>
-                <Card.Img variant="top" src={film.src} />
+                <Card.Img
+                  variant="top"
+                  src={
+                    film.image ||
+                    "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002679?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500"
+                  }
+                />
                 <Card.Body>
-                  <Card.Title>{film.title}</Card.Title>
-                  <Button variant="primary" onClick={() => handleOrderTicket()}>
+                  <Card.Title>{film.name}</Card.Title>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleOrderTicket(film.id)}
+                  >
                     Đặt vé
                   </Button>
                 </Card.Body>

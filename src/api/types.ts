@@ -8,6 +8,7 @@ export interface IResponseApi<T> {
   success?: boolean;
   data?: T;
   message?: string;
+  statusCode?: number;
   status?: number | string;
   page?: {
     current: number;

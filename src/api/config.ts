@@ -3,9 +3,9 @@ export const baseDomain = "https://cinema-team.asia";
 
 // export const baseUrl = "https://selfcare.vietnamobile.com.vn"; // staging
 
-export const baseUrl = "https://cinema-api-vzrcoixrua-as.a.run.app"; // release
+// export const baseUrl = "https://cinema-api-vzrcoixrua-as.a.run.app"; // release
 
-// export const baseUrl = "https://localhost:5001"; // local
+export const baseUrl = "https://localhost:44389"; // local
 
 export const timeout = 30000;
 
@@ -23,3 +23,9 @@ export const apiGetDetailUser = "/api/cus/Customer/GetMyInfo";
 
 // api update userinfo
 export const apiUpdateUserInfo = "/api/cus/Customer/EditMyInfo";
+
+// api get all film
+export const apiGetAllFilm = "/api/MovieInfo/getListMovie";
+
+// api get suat chieu theo ngay
+export const apiGetAllShowTimeByDate = "/api/ShowtimeInfo/getListShowTime";

@@ -44,7 +44,7 @@ const routeList: any = [
         ),
       },
       {
-        path: "/detailFilm",
+        path: "/detailFilm/:idFilm",
         element: (
           <WrapperRouteComponent
             element={<DetailFilm />}
