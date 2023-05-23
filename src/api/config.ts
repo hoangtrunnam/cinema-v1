@@ -29,3 +29,7 @@ export const apiGetAllFilm = "/api/MovieInfo/getListMovie";
 
 // api get suat chieu theo ngay
 export const apiGetAllShowTimeByDate = "/api/ShowtimeInfo/getListShowTime";
+
+// api get all seat by show time
+export const apiGetAllSeatByShowTime =
+  "/api/ShowtimeInfo/getListTicketByShowTime";

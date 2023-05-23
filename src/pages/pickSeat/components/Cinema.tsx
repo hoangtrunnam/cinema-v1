@@ -1,25 +1,29 @@
 import React from "react";
 import "../index.css";
 import clsx from "clsx";
+import { ISeat } from "..";
 interface IProps {
-  movie: any;
-  selectedSeats: any;
-  onSelectedSeatsChange: any;
-  seats: any[];
+  selectedSeats: ISeat[];
+  onSelectedSeatsChange: (arraySeat: any) => void;
+  seats: ISeat[];
 }
 
 const Cinema = (props: IProps) => {
-  const { movie, selectedSeats, onSelectedSeatsChange, seats } = props;
+  const { selectedSeats, onSelectedSeatsChange, seats } = props;
 
-  function handleSelectedState(seat: any) {
-    const isSelected = selectedSeats.includes(seat);
+  function handleSelectedState(seatobj: ISeat) {
+    const isSelected = selectedSeats.some(
+      (itemSeat) => itemSeat.id === seatobj.id
+    );
 
     if (isSelected) {
       onSelectedSeatsChange(
-        selectedSeats.filter((selectedSeat: any) => selectedSeat !== seat)
+        selectedSeats.filter(
+          (selectedSeat: ISeat) => selectedSeat.id !== seatobj.id
+        )
       );
     } else {
-      onSelectedSeatsChange([...selectedSeats, seat]);
+      onSelectedSeatsChange([...selectedSeats, seatobj]);
     }
   }
 
@@ -29,20 +33,27 @@ const Cinema = (props: IProps) => {
 
       <div className="seats">
         {seats.map((seat) => {
-          const isSelected = selectedSeats.includes(seat);
-          const isOccupied = movie.occupied.includes(seat);
+          const isSelected = selectedSeats.some(
+            (itemSeat) => itemSeat.id === seat.id
+          );
+          const isOccupied = seat.status !== 0 ? true : false; // ghe da duoc chon
 
           return (
-            <span
-              tabIndex={0}
-              key={seat}
-              className={clsx(
-                "seat",
-                isSelected && "selected",
-                isOccupied && "occupied"
-              )}
-              onClick={isOccupied ? undefined : () => handleSelectedState(seat)}
-            />
+            <div key={seat.id}>
+              <span
+                tabIndex={0}
+                key={seat.id}
+                className={clsx(
+                  "seat",
+                  isSelected && "selected",
+                  isOccupied && "occupied"
+                )}
+                onClick={
+                  isOccupied ? undefined : () => handleSelectedState(seat)
+                }
+              />
+              <p>{seat.location}</p>
+            </div>
           );
         })}
       </div>

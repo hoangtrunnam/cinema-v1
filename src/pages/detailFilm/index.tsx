@@ -82,7 +82,7 @@ const DetailFilm = () => {
 
   const handleChooseSeat = () => {
     // navigate("/pick-seat", { state: { idShowTime: "123456" } });
-    navigate("/pick-seat/1221");
+    navigate("/pick-seat/10006");
   };
 
   return (
