@@ -1,25 +1,26 @@
 import React from "react";
 import "../index.css";
 import clsx from "clsx";
+import { ISeat } from "..";
 interface IProps {
-  movie: any;
-  selectedSeats: any;
-  onSelectedSeatsChange: any;
-  seats: any[];
+  selectedSeats: ISeat[];
+  onSelectedSeatsChange: (id: any) => void;
+  seats: ISeat[];
 }
 
 const Cinema = (props: IProps) => {
-  const { movie, selectedSeats, onSelectedSeatsChange, seats } = props;
+  const { selectedSeats, onSelectedSeatsChange, seats } = props;
 
-  function handleSelectedState(seat: any) {
-    const isSelected = selectedSeats.includes(seat);
+  function handleSelectedState(seat: ISeat) {
+    const isSelected = selectedSeats.some((selectedSeat: ISeat) => selectedSeat.id === seat.id);
 
     if (isSelected) {
       onSelectedSeatsChange(
-        selectedSeats.filter((selectedSeat: any) => selectedSeat !== seat)
+        selectedSeats.filter((selectedSeat: ISeat) => selectedSeat.id !== seat.id)
       );
     } else {
-      onSelectedSeatsChange([...selectedSeats, seat]);
+      const tempObj = [...selectedSeats]
+      onSelectedSeatsChange([...tempObj, seat]);
     }
   }
 
@@ -28,14 +29,14 @@ const Cinema = (props: IProps) => {
       <div className="screen" />
 
       <div className="seats">
-        {seats.map((seat) => {
-          const isSelected = selectedSeats.includes(seat);
-          const isOccupied = movie.occupied.includes(seat);
+        {seats.map((seat: ISeat) => {
+          const isSelected = selectedSeats.some(selectedSeat => selectedSeat.id === seat.id);
+          const isOccupied = false;
 
           return (
             <span
               tabIndex={0}
-              key={seat}
+              key={seat.id}
               className={clsx(
                 "seat",
                 isSelected && "selected",

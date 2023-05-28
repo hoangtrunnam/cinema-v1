@@ -80,9 +80,9 @@ const DetailFilm = () => {
     handleGetShowTimeByDate();
   }, [handleGetShowTimeByDate]);
 
-  const handleChooseSeat = () => {
+  const handleChooseSeat = (id: number) => {
     // navigate("/pick-seat", { state: { idShowTime: "123456" } });
-    navigate("/pick-seat/1221");
+    navigate(`/pick-seat/${id}`);
   };
 
   return (
@@ -192,7 +192,7 @@ const DetailFilm = () => {
                     marginRight: "16px",
                   }}
                 >
-                  <MDBBtn color="info" onClick={handleChooseSeat}>
+                  <MDBBtn color="info" onClick={() => handleChooseSeat(showTime.id)}>
                     {showTime.startTime}
                   </MDBBtn>
                 </div>

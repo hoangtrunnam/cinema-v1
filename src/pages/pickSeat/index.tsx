@@ -1,72 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
-import Movies from "./components/Movies";
 import ShowCase from "./components/ShowCase";
 import Cinema from "./components/Cinema";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { getListSeatByShowTimeId } from "src/api/film";
 
-const movies = [
-  {
-    name: "Avenger",
-    price: 10,
-    occupied: [20, 21, 30, 1, 2, 8],
-  },
-  {
-    name: "Joker",
-    price: 12,
-    occupied: [9, 41, 35, 11, 65, 26],
-  },
-  {
-    name: "Toy story",
-    price: 8,
-    occupied: [37, 25, 44, 13, 2, 3],
-  },
-  {
-    name: "the lion king",
-    price: 9,
-    occupied: [10, 12, 50, 33, 28, 47],
-  },
-];
+export interface ISeat {
+  id: number;
+  location: string;
+  status: number;
+  price: number;
+  seatRankName: string
+  customerId: any;
+  empoyeeId: any;
+}
 
-const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
 
 const PickSeat = () => {
-  const location = useLocation();
   // const { idShowTime } = state;
 
-  console.log("id show time", location);
   const { idShowTime } = useParams();
 
   console.log("id show time123", idShowTime);
 
-  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
+  const [listSeat, setListSeat] = useState<ISeat[]>([]);
+
+  console.log("selectedSeats", selectedSeats);
+
+
+  const handleGetListSeatByShowTimeId = async () => {
+    if (idShowTime) {
+      const res = await getListSeatByShowTimeId(+idShowTime);
+      if (res.statusCode && Array.isArray(res.data)) {
+        setListSeat(res.data);
+      } else {
+        setListSeat([]);
+      }
+    } else {
+      console.log("id show time is undefined", idShowTime);
+    }
+  }; 
+
+  useEffect(() => {
+    handleGetListSeatByShowTimeId();
+  }, [])
 
   return (
     <div className="App">
-      <Movies
-        movie={selectedMovie}
-        onChange={(movie) => {
-          setSelectedSeats([]);
-          setSelectedMovie(movie);
-        }}
-        movies={movies}
-      />
       <ShowCase />
       <Cinema
-        movie={selectedMovie}
         selectedSeats={selectedSeats}
         onSelectedSeatsChange={(selectedSeats: any) =>
           setSelectedSeats(selectedSeats)
         }
-        seats={seats}
+        seats={listSeat}
       />
 
       <p className="info">
-        You have selected <span className="count">{selectedSeats.length}</span>{" "}
-        seats for the price of{" "}
+        Bạn đã chọn <span className="count">{selectedSeats.length}</span>{" "}
+        ghế và có tổng giá là:{" "}
         <span className="total">
-          {selectedSeats.length * selectedMovie.price}$
+          {selectedSeats.reduce((acc, obj) => acc + obj.price, 0)}VND
         </span>
       </p>
     </div>

@@ -1,4 +1,4 @@
-import { apiGetAllFilm, apiGetAllShowTimeByDate } from "./config";
+import { apiGetAllFilm, apiGetAllSeatByShowTimeId, apiGetAllShowTimeByDate } from "./config";
 import { handleError } from "./handleError";
 import request from "./request";
 import type { ApiResponse } from "./types";
@@ -29,6 +29,28 @@ export const getListShowTimeByDate = async (
       params: {
         date,
         MovieName,
+      },
+    });
+    const { statusCode, data, code, message } = res.data;
+
+    return {
+      statusCode,
+      data,
+      code,
+      message,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getListSeatByShowTimeId = async (
+  IdShowTime: number
+): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().get(apiGetAllSeatByShowTimeId, {
+      params: {
+        IdShowTime,
       },
     });
     const { statusCode, data, code, message } = res.data;

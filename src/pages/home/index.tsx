@@ -1,45 +1,44 @@
 // import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.less";
-import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import CarouselFilm from "./component/CarouselFilm";
 import CarouselKM from "./component/CarouselKM";
 import { getListFilm } from "src/api/film";
 import { useRecoilState } from "recoil";
 import { listAllFilmState } from "src/recoil/film/atom";
-interface IListCarouselBanner {
-  id: number;
-  src: string;
-  alt: string;
-}
+// interface IListCarouselBanner {
+//   id: number;
+//   src: string;
+//   alt: string;
+// }
 
-const listCarouselBanner: IListCarouselBanner[] = [
-  {
-    id: 1,
-    src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-10.jpg",
-    alt: "1 slide",
-  },
-  {
-    id: 2,
-    src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-8.jpg",
-    alt: "2 slide",
-  },
-  {
-    id: 3,
-    src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-9.jpg",
-    alt: "3 slide",
-  },
-  {
-    id: 4,
-    src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/MUANHIEUTRUNGLON-WEB-1920X1080-1.jpeg",
-    alt: "4 slide",
-  },
-  {
-    id: 5,
-    src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/Visa-x-BHD-WEB.jpg",
-    alt: "5 slide",
-  },
-];
+// const listCarouselBanner: IListCarouselBanner[] = [
+//   {
+//     id: 1,
+//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-10.jpg",
+//     alt: "1 slide",
+//   },
+//   {
+//     id: 2,
+//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-8.jpg",
+//     alt: "2 slide",
+//   },
+//   {
+//     id: 3,
+//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-9.jpg",
+//     alt: "3 slide",
+//   },
+//   {
+//     id: 4,
+//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/MUANHIEUTRUNGLON-WEB-1920X1080-1.jpeg",
+//     alt: "4 slide",
+//   },
+//   {
+//     id: 5,
+//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/Visa-x-BHD-WEB.jpg",
+//     alt: "5 slide",
+//   },
+// ];
 
 const HomePage = () => {
   // const navigate = useNavigate();
@@ -69,20 +68,11 @@ const HomePage = () => {
 
   return (
     <div className="login-page">
-      <MDBCarousel showIndicators showControls fade dealy={2000}>
-        {listCarouselBanner.map((carousel: IListCarouselBanner) => {
-          return (
-            <div key={carousel.id}>
-              <MDBCarouselItem
-                className="w-100 d-block"
-                itemId={carousel.id}
-                src={carousel.src}
-                alt={carousel.alt}
-              />
-            </div>
-          );
-        })}
-      </MDBCarousel>
+      <img
+        src="https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-10.jpg"
+        className="img-fluid shadow-4"
+        alt="..."
+      />
       <div
         style={{
           display: "flex",
