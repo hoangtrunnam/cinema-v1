@@ -192,8 +192,11 @@ const DetailFilm = () => {
                     marginRight: "16px",
                   }}
                 >
-                  <MDBBtn color="info" onClick={() => handleChooseSeat(showTime.id)}>
-                    {showTime.startTime}
+                  <MDBBtn
+                    color="info"
+                    onClick={() => handleChooseSeat(showTime.id)}
+                  >
+                    {convertDayFromString(showTime.startTime)}
                   </MDBBtn>
                 </div>
               );

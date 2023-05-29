@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Exo+2&display=swap");
 
 *,
 *::after,
@@ -95,7 +95,7 @@
 }
 
 .Cinema .seats .seat.selected::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 2px;
@@ -136,6 +136,29 @@
 
 .seat.selected {
   background: #7bc47f !important;
+}
+
+.standard {
+  background: #01c73c !important;
+}
+.standardText {
+  color: #01c73c !important;
+}
+
+.seat.vip {
+  background: #f71708 !important;
+}
+
+.vipText {
+  color: #f71708 !important;
+}
+
+.seat.sweetBox {
+  background: #ff62b0 !important;
+}
+
+.sweetBoxText {
+  color: #ff62b0 !important;
 }
 
 .seat.occupied {
