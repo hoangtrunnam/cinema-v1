@@ -2,17 +2,28 @@ import React from "react";
 import "../index.css";
 const ShowCase = () => {
   return (
-    <ul className="ShowCase">
-      <li>
-        <span className="seat" /> <small>N/A</small>
-      </li>
-      <li>
-        <span className="seat selected" /> <small>Selected</small>
-      </li>
-      <li>
-        <span className="seat occupied" /> <small>Occupied</small>
-      </li>
-    </ul>
+    <>
+      <ul className="ShowCase">
+        <li>
+          <span className="seat" /> <small>Trống</small>
+        </li>
+        <li>
+          <span className="seat selected" /> <small>Đã chọn</small>
+        </li>
+        <li>
+          <span className="seat occupied" /> <small>Đang chọn</small>
+        </li>
+        <li>
+          <span className="seat standard" /> <small>Standard</small>
+        </li>
+        <li>
+          <span className="seat vip" /> <small>Vip</small>
+        </li>
+        <li>
+          <span className="seat sweetBox" /> <small>SweetBox</small>
+        </li>
+      </ul>
+    </>
   );
 };
 

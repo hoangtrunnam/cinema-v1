@@ -11,6 +11,7 @@ import LoginPage from "src/pages/login";
 import UserProfile from "src/pages/userProfile";
 import DetailFilm from "src/pages/detailFilm";
 import PickSeat from "src/pages/pickSeat";
+import PickFood from "src/pages/pickFood";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -56,6 +57,12 @@ const routeList: any = [
         path: "/pick-seat/:idShowTime",
         element: (
           <WrapperRouteComponent element={<PickSeat />} titleId="pick-seat" />
+        ),
+      },
+      {
+        path: "/pick-food",
+        element: (
+          <WrapperRouteComponent element={<PickFood />} titleId="pick-food" />
         ),
       },
       {
