@@ -108,7 +108,7 @@ const DetailFilm = () => {
             </p>
             <p className="text-left">{film?.description}</p>
             <div style={{ display: "flex" }}>
-              <p className="text-left">Phan loai: &nbsp;</p>
+              <p className="text-left">Phân loại: &nbsp;</p>
               <p className="text-left">P - PHIM PHỔ BIẾN CHO MỌI LỨA TUỔI</p>
             </div>
             <div style={{ display: "flex" }}>

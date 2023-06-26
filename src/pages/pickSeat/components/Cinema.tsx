@@ -29,10 +29,20 @@ const Cinema = (props: IProps) => {
     }
   }
 
-  const enumColorSeatText = {
-    Standard: "standardText",
-    Vip: "vipText",
-    SweetBox: "sweetBoxText",
+  // const enumColorSeatText = {
+  //   Standard: "standardText",
+  //   Vip: "vipText",
+  //   SweetBox: "sweetBoxText",
+  // };
+
+  const handleClsx = (seat: ISeat): any => {
+    if (seat.seatRankName === "Standard") {
+      return clsx("standardText");
+    } else if (seat.seatRankName === "Vip") {
+      return clsx("vipText");
+    } else {
+      return clsx("sweetBoxText");
+    }
   };
 
   return (
@@ -69,9 +79,7 @@ const Cinema = (props: IProps) => {
                   }
                 />
                 {/* van chay ok */}
-                <p className={clsx(enumColorSeatText[seat.seatRankName])}>
-                  {seat.location}
-                </p>
+                <p className={handleClsx(seat)}>{seat.location}</p>
               </div>
             </>
           );

@@ -44,7 +44,8 @@ const PickSeat = () => {
   };
 
   const handleNavigateToSelectFood = () => {
-    navigate(`/pick-food`);
+    // navigate(`/pick-food`);
+    navigate(`/confirm-ticket`);
   };
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const PickSeat = () => {
       <div>
         <Button
           variant="success"
-          disabled={selectedSeats.length === 0 ? true : false}
+          // disabled={selectedSeats.length === 0 ? true : false}
           size="lg"
           onClick={handleNavigateToSelectFood}
         >

@@ -1,4 +1,8 @@
-import { apiGetAllFilm, apiGetAllSeatByShowTimeId, apiGetAllShowTimeByDate } from "./config";
+import {
+  apiGetAllFilm,
+  apiGetAllSeatByShowTimeId,
+  apiGetAllShowTimeByDate,
+} from "./config";
 import { handleError } from "./handleError";
 import request from "./request";
 import type { ApiResponse } from "./types";

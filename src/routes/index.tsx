@@ -12,6 +12,7 @@ import UserProfile from "src/pages/userProfile";
 import DetailFilm from "src/pages/detailFilm";
 import PickSeat from "src/pages/pickSeat";
 import PickFood from "src/pages/pickFood";
+import ConfirmTicket from "src/pages/confirmTicket";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -63,6 +64,15 @@ const routeList: any = [
         path: "/pick-food",
         element: (
           <WrapperRouteComponent element={<PickFood />} titleId="pick-food" />
+        ),
+      },
+      {
+        path: "/confirm-ticket",
+        element: (
+          <WrapperRouteComponent
+            element={<ConfirmTicket />}
+            titleId="confirm-ticket"
+          />
         ),
       },
       {
