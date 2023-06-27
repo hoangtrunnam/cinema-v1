@@ -13,6 +13,7 @@ import DetailFilm from "src/pages/detailFilm";
 import PickSeat from "src/pages/pickSeat";
 import PickFood from "src/pages/pickFood";
 import ConfirmTicket from "src/pages/confirmTicket";
+import MemberRule from "src/pages/memberRule";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -72,6 +73,15 @@ const routeList: any = [
           <WrapperRouteComponent
             element={<ConfirmTicket />}
             titleId="confirm-ticket"
+          />
+        ),
+      },
+      {
+        path: "/member-rule",
+        element: (
+          <WrapperRouteComponent
+            element={<MemberRule />}
+            titleId="member-rule"
           />
         ),
       },

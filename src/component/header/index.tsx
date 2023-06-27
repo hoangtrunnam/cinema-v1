@@ -37,6 +37,10 @@ const HeaderComponent = () => {
     navigate("/login");
   };
 
+  const handleNavigateMemberRule = () => {
+    navigate("/member-rule");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -61,6 +65,9 @@ const HeaderComponent = () => {
               <NavDropdown.Item href="#action/3.5">Tuyển dụng</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.6">
                 Về chúng tôi
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleNavigateMemberRule}>
+                Quy định thành viên
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
