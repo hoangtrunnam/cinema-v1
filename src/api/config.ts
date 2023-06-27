@@ -36,3 +36,6 @@ export const apiGetAllSeatByShowTimeId =
 
 // api check seat
 export const apiCheckSeatPicked = "api/Booking/CustomerCheckTicket";
+
+// api buy tickets
+export const apiBuyTickets = "/api/Booking/CustomerBooking";

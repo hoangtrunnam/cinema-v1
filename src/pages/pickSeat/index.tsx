@@ -5,9 +5,11 @@ import Cinema from "./components/Cinema";
 import { useNavigate, useParams } from "react-router-dom";
 import { getListSeatByShowTimeId, handleCheckSeatPicked } from "src/api/film";
 import Button from "react-bootstrap/esm/Button";
-import { useCookie } from "src/hooks/useCookie";
-import { CookiesEnum, IUserLogin } from "src/types/auth";
-import jwt from "jwt-decode";
+import { useRecoilState } from "recoil";
+import { listSeatPickedState } from "src/recoil/filmChoosed/atom";
+// import { useCookie } from "src/hooks/useCookie";
+// import { CookiesEnum, IUserLogin } from "src/types/auth";
+// import jwt from "jwt-decode";
 export interface ISeat {
   id: number;
   location: string;
@@ -20,10 +22,12 @@ export interface ISeat {
 
 const PickSeat = () => {
   // const { idShowTime } = state;
-  const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
-  const user: any = jwt(dataCookie?.accessToken);
+  // const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
+  // const user: any = jwt(dataCookie?.accessToken);
 
-  console.log("user la:", user);
+  // console.log("user la:", user);
+  const [_listSeatPicked, setListSeatPicked] =
+    useRecoilState(listSeatPickedState);
   const { idShowTime } = useParams();
   const navigate = useNavigate();
 
@@ -50,12 +54,10 @@ const PickSeat = () => {
 
   const handleCheckSeatPickedByUser = async () => {
     const selectedSeatId = selectedSeats.map((item: ISeat) => item.id);
-    const res = await handleCheckSeatPicked(
-      selectedSeatId,
-      Number(user?.nameid) || 0
-    );
+    const res = await handleCheckSeatPicked(selectedSeatId);
 
     console.log("this is res check seat", res);
+    setListSeatPicked(selectedSeats);
     navigate(`/confirm-ticket`);
   };
 

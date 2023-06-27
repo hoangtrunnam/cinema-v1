@@ -1,4 +1,5 @@
 import {
+  apiBuyTickets,
   apiCheckSeatPicked,
   apiGetAllFilm,
   apiGetAllSeatByShowTimeId,
@@ -72,18 +73,41 @@ export const getListSeatByShowTimeId = async (
 };
 
 export const handleCheckSeatPicked = async (
-  listticket: number[],
-  personId: number
+  listticket: number[]
 ): Promise<ApiResponse<any>> => {
   try {
-    // const { listticket, personId } = dataCheckSeat;
-
     const body = {
       listticket,
-      personId,
     };
 
     const res = await request().post(apiCheckSeatPicked, body);
+
+    console.log("res", res);
+
+    // res dựa trên api response để define
+    const { status, data, code, message } = res.data;
+
+    return {
+      status,
+      data,
+      code,
+      message,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const handleApiBuyTicket = async (
+  cusId: number,
+  listticket: number[]
+): Promise<ApiResponse<any>> => {
+  try {
+    const body = {
+      listticket,
+    };
+
+    const res = await request().post(`${apiBuyTickets}?${cusId}`, body);
 
     console.log("res", res);
 
