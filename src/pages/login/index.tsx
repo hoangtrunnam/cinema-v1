@@ -8,7 +8,6 @@ import "./index.less";
 import {
   MDBContainer,
   MDBInput,
-  MDBCheckbox,
   MDBBtn,
   MDBTabs,
   MDBTabsContent,
@@ -195,14 +194,14 @@ const LoginPage = () => {
               }
             />
 
-            <div className="d-flex justify-content-between mx-4 mb-4">
+            {/* <div className="d-flex justify-content-between mx-4 mb-4">
               <MDBCheckbox
                 name="flexCheck"
                 value=""
                 id="flexCheckDefault"
                 label="Remember me"
               />
-            </div>
+            </div> */}
 
             <MDBBtn className="mb-4 w-100" onClick={handleLogin}>
               Đăng nhập
@@ -309,11 +308,11 @@ const LoginPage = () => {
                 id="flexCheckDefault"
                 label="Tôi đã đọc, hiểu và đồng ý với các điều khoản"
               /> */}
-              <MDBCheckbox
+              {/* <MDBCheckbox
                 name="flexCheck"
                 id="flexCheckDefault"
                 label="Nhận thông tin chương trình khuyến mãi"
-              />
+              /> */}
             </div>
 
             {errorEmpty ? <p style={{ color: "red" }}>{errorEmpty}</p> : null}
