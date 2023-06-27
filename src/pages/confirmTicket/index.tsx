@@ -8,10 +8,23 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import Table from "react-bootstrap/Table";
+import { useNavigate } from "react-router-dom";
 
 const ConfirmTicket = () => {
+  const navigate = useNavigate();
+  const handleBuyTicket = () => {
+    navigate(`/`);
+  };
+
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <MDBCol sm="6">
         <MDBCard>
           <MDBCardBody>
@@ -79,7 +92,7 @@ const ConfirmTicket = () => {
                 </div>
               </div> */}
             </div>
-            <MDBBtn href="#">Đặt vé</MDBBtn>
+            <MDBBtn onClick={handleBuyTicket}>Đặt vé</MDBBtn>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>

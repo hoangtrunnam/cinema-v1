@@ -33,3 +33,6 @@ export const apiGetAllShowTimeByDate = "/api/ShowtimeInfo/getListShowTime";
 // api get ghe theo id suat chieu
 export const apiGetAllSeatByShowTimeId =
   "/api/ShowtimeInfo/getListTicketByShowTime";
+
+// api check seat
+export const apiCheckSeatPicked = "api/Booking/CustomerCheckTicket";
