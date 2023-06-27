@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
 import { IAllFilm } from "src/recoil/film/atom";
+import { useRecoilState } from "recoil";
+import { filmChooseState } from "src/recoil/filmChoosed/atom";
 
 const responsive = {
   superLargeDesktop: {
@@ -82,9 +84,13 @@ interface IListFilm {
 // ];
 const CarouselFilm = (props: IListFilm) => {
   const { listFilm } = props;
+
+  console.log({ listFilm });
+  const [_filmChoosed, setFilmChoosed] = useRecoilState(filmChooseState);
   const navigate = useNavigate();
-  const handleOrderTicket = (idFilm: number) => {
-    navigate(`/detailFilm/${idFilm}`);
+  const handleOrderTicket = (filmChoose: IAllFilm) => {
+    setFilmChoosed(filmChoose);
+    navigate(`/detailFilm/${filmChoose.id}`);
   };
 
   return (
@@ -126,7 +132,7 @@ const CarouselFilm = (props: IListFilm) => {
                   <Card.Title>{film.name}</Card.Title>
                   <Button
                     variant="primary"
-                    onClick={() => handleOrderTicket(film.id)}
+                    onClick={() => handleOrderTicket(film)}
                   >
                     Đặt vé
                   </Button>

@@ -3,9 +3,13 @@ import "./index.css";
 import ShowCase from "./components/ShowCase";
 import Cinema from "./components/Cinema";
 import { useNavigate, useParams } from "react-router-dom";
-import { getListSeatByShowTimeId } from "src/api/film";
+import { getListSeatByShowTimeId, handleCheckSeatPicked } from "src/api/film";
 import Button from "react-bootstrap/esm/Button";
-
+import { useRecoilState } from "recoil";
+import { listSeatPickedState } from "src/recoil/filmChoosed/atom";
+// import { useCookie } from "src/hooks/useCookie";
+// import { CookiesEnum, IUserLogin } from "src/types/auth";
+// import jwt from "jwt-decode";
 export interface ISeat {
   id: number;
   location: string;
@@ -18,7 +22,12 @@ export interface ISeat {
 
 const PickSeat = () => {
   // const { idShowTime } = state;
+  // const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
+  // const user: any = jwt(dataCookie?.accessToken);
 
+  // console.log("user la:", user);
+  const [_listSeatPicked, setListSeatPicked] =
+    useRecoilState(listSeatPickedState);
   const { idShowTime } = useParams();
   const navigate = useNavigate();
 
@@ -43,10 +52,19 @@ const PickSeat = () => {
     }
   };
 
-  const handleNavigateToSelectFood = () => {
-    // navigate(`/pick-food`);
+  const handleCheckSeatPickedByUser = async () => {
+    const selectedSeatId = selectedSeats.map((item: ISeat) => item.id);
+    const res = await handleCheckSeatPicked(selectedSeatId);
+
+    console.log("this is res check seat", res);
+    setListSeatPicked(selectedSeats);
     navigate(`/confirm-ticket`);
   };
+
+  // const handleNavigateToSelectFood = () => {
+  //   // navigate(`/pick-food`);
+  //   navigate(`/confirm-ticket`);
+  // };
 
   useEffect(() => {
     handleGetListSeatByShowTimeId();
@@ -75,7 +93,7 @@ const PickSeat = () => {
           variant="success"
           // disabled={selectedSeats.length === 0 ? true : false}
           size="lg"
-          onClick={handleNavigateToSelectFood}
+          onClick={() => handleCheckSeatPickedByUser()}
         >
           Tiếp tục
         </Button>

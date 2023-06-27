@@ -8,10 +8,60 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import Table from "react-bootstrap/Table";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import {
+  filmChooseState,
+  listSeatPickedState,
+} from "src/recoil/filmChoosed/atom";
+import { handleApiBuyTicket } from "src/api/film";
+import { ISeat } from "../pickSeat";
+import jwt from "jwt-decode";
+import { getToken } from "src/api/core";
 
 const ConfirmTicket = () => {
+  const filmChoosed = useRecoilValue(filmChooseState);
+  const listSeatPicked = useRecoilValue(listSeatPickedState);
+  const navigate = useNavigate();
+
+  console.log("filmChoosed:", filmChoosed);
+  console.log("filmChoosed:", listSeatPicked);
+
+  const handleBuyTicket = async () => {
+    const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
+    const user: any = jwt(await getToken());
+
+    if (user && user?.nameid) {
+      console.log("user:", user);
+      const res = await handleApiBuyTicket(user?.nameid, listIdSeatPicked);
+
+      console.log("res sau khi click buy ticket", res);
+      if (res.data) {
+        alert("Đặt vé thành công");
+      }
+    } else {
+      alert("bạn chưa đăng nhập, vui lòng đăng nhập để tiếp tục");
+      navigate(`/login`);
+    }
+
+    // navigate(`/`);
+  };
+
+  // const handleListSeatPicked = () => {
+  //   listSeatPicked.map((item: ISeat) => {
+  //     return [...item.location].join(", ");
+  //   });
+  // };
+
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <MDBCol sm="6">
         <MDBCard>
           <MDBCardBody>
@@ -22,19 +72,19 @@ const ConfirmTicket = () => {
             <MDBCardText>Vé mua rồi sẽ không được đổi hoặc trả lại</MDBCardText>
             <div style={{ display: "flex" }}>
               <p className="text-left">Phim: &nbsp;</p>
-              <p className="text-left">Lat mat 6</p>
+              <p className="text-left">{filmChoosed?.name}</p>
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Ngày: &nbsp;</p>
-              <p className="text-left">26-jun</p>
+              <p className="text-left">{filmChoosed?.publishDate}</p>
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Suất: &nbsp;</p>
-              <p className="text-left">15:40 - Rạp số 5</p>
+              <p className="text-left">15:40 - Rạp số xxxx</p>
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Ghế: &nbsp;</p>
-              <p className="text-left">B11, B12</p>
+              <p className="text-left">c1 ,c2</p>
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Thành tiền: &nbsp;</p>
@@ -79,7 +129,7 @@ const ConfirmTicket = () => {
                 </div>
               </div> */}
             </div>
-            <MDBBtn href="#">Đặt vé</MDBBtn>
+            <MDBBtn onClick={handleBuyTicket}>Đặt vé</MDBBtn>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
