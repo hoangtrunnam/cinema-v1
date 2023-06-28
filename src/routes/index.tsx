@@ -14,6 +14,7 @@ import PickSeat from "src/pages/pickSeat";
 import PickFood from "src/pages/pickFood";
 import ConfirmTicket from "src/pages/confirmTicket";
 import MemberRule from "src/pages/memberRule";
+import TradeVoucher from "src/pages/TradeVoucher";
 
 // and then replace history.push('/path') with navigate('/path')
 
@@ -88,6 +89,16 @@ const routeList: any = [
       {
         path: "/card",
         element: <WrapperRouteComponent element={<Card />} titleId="card" />,
+      },
+
+      {
+        path: "/trade-voucher",
+        element: (
+          <WrapperRouteComponent
+            element={<TradeVoucher />}
+            titleId="trade-voucher"
+          />
+        ),
       },
       {
         path: "/userProfile",

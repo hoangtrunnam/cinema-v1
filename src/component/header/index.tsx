@@ -41,6 +41,10 @@ const HeaderComponent = () => {
     navigate("/member-rule");
   };
 
+  const handleTradeVoucher = () => {
+    navigate("/trade-voucher");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -49,7 +53,7 @@ const HeaderComponent = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#muave">Mua vé</Nav.Link>
+            <Nav.Link onClick={handleTradeVoucher}>Đổi voucher</Nav.Link>
             <NavDropdown title="Menu" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Lịch chiếu</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
