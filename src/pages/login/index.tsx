@@ -111,7 +111,7 @@ const LoginPage = () => {
 
       console.log("res haha", res);
 
-      if (res.code === 200 && res.status) {
+      if (res.statusCode === 200) {
         alert("Đăng nhập thành công");
         cookies.set(CookiesEnum.USER_INFO, res.data);
         navigate("/homePage");

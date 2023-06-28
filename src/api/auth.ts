@@ -105,13 +105,14 @@ export const handleLoginUser = async (
     console.log("res", res);
 
     // res dựa trên api response để define
-    const { status, data, code, message } = res.data;
+    const { status, data, code, message, statusCode } = res.data;
 
     return {
       status,
       data,
       code,
       message,
+      statusCode,
     };
   } catch (error) {
     return handleError(error);
