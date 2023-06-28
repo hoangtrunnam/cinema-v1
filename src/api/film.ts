@@ -5,6 +5,8 @@ import {
   apiGetAllSeatByShowTimeId,
   apiGetAllShowTimeByDate,
   apiGetGift,
+  apiGetGiftTrade,
+  apiPostGiftTrade,
 } from "./config";
 import { handleError } from "./handleError";
 import request from "./request";
@@ -133,6 +135,59 @@ export const getListGift = async (): Promise<ApiResponse<any>> => {
 
     return {
       statusCode,
+      data,
+      code,
+      message,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getListGiftForTrade = async (
+  ChangeGiftCode?: string,
+  CusId?: number
+): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().get(apiGetGiftTrade, {
+      params: {
+        ChangeGiftCode,
+        CusId,
+      },
+    });
+
+    console.log("res in api", res);
+    const { data, status } = res;
+
+    const code = -1;
+
+    return {
+      data,
+      code,
+      status,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const tradeGift = async (
+  giftId: number,
+  cusId: number,
+  giftPoint: number
+): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().post(
+      `${apiPostGiftTrade}?giftId=${giftId}&cusId=${cusId}&giftPoint=${giftPoint}`
+    );
+
+    console.log("res", res);
+
+    // res dựa trên api response để define
+    const { status, data, code, message } = res.data;
+
+    return {
+      status,
       data,
       code,
       message,

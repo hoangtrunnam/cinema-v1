@@ -126,13 +126,14 @@ export const getDetailUserInfo = async (): Promise<ApiResponse<any>> => {
 
     console.log("res", res);
 
-    const { status, data, code, message } = res.data;
+    const { status, data, code, message, statusCode } = res.data;
 
     return {
       status,
       data,
       code,
       message,
+      statusCode,
     };
   } catch (error) {
     return handleError(error);

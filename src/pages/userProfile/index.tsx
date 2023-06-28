@@ -63,7 +63,7 @@ const UserProfile = () => {
   const handleGetDetailUserInfo = useCallback(async () => {
     const res = await getDetailUserInfo();
 
-    if (res.code === 200 && res.status) {
+    if (res.statusCode === 200) {
       setUserInfo(res.data);
     } else {
       setUserInfo({
