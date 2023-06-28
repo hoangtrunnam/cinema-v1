@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   filmChooseState,
+  giftPickedState,
   listSeatPickedState,
 } from "src/recoil/filmChoosed/atom";
 import { handleApiBuyTicket } from "src/api/film";
@@ -24,10 +25,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 const ConfirmTicket = () => {
   const filmChoosed = useRecoilValue(filmChooseState);
   const listSeatPicked = useRecoilValue(listSeatPickedState);
+  const giftPicked = useRecoilValue(giftPickedState);
   const navigate = useNavigate();
 
   console.log("filmChoosed:", filmChoosed);
   console.log("filmChoosed:", listSeatPicked);
+  console.log("giftPicked", giftPicked);
 
   const handleBuyTicket = async () => {
     const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
@@ -134,16 +137,16 @@ const ConfirmTicket = () => {
                     <td>65,000</td>
                   </tr>
                   <tr>
-                    <td>Bỏng ngô</td>
-                    <td>150000</td>
-                    <td>2</td>
-                    <td>300,000</td>
+                    <td>{giftPicked.giftName}</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
                   </tr>
                   <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>365,000</td>
+                    <td>65,000</td>
                   </tr>
                 </tbody>
               </Table>

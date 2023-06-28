@@ -4,6 +4,7 @@ import {
   apiGetAllFilm,
   apiGetAllSeatByShowTimeId,
   apiGetAllShowTimeByDate,
+  apiGetGift,
 } from "./config";
 import { handleError } from "./handleError";
 import request from "./request";
@@ -116,6 +117,22 @@ export const handleApiBuyTicket = async (
 
     return {
       status,
+      data,
+      code,
+      message,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getListGift = async (): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().get(apiGetGift);
+    const { statusCode, data, code, message } = res.data;
+
+    return {
+      statusCode,
       data,
       code,
       message,

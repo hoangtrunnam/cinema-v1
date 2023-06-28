@@ -39,3 +39,6 @@ export const apiCheckSeatPicked = "api/Booking/CustomerCheckTicket";
 
 // api buy tickets
 export const apiBuyTickets = "/api/Booking/CustomerBooking";
+
+// api get list gift
+export const apiGetGift = "/api/PolicyGifts/GetAll";
