@@ -18,6 +18,8 @@ import { handleApiBuyTicket } from "src/api/film";
 import { ISeat } from "../pickSeat";
 import jwt from "jwt-decode";
 import { getToken } from "src/api/core";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const ConfirmTicket = () => {
   const filmChoosed = useRecoilValue(filmChooseState);
@@ -45,6 +47,30 @@ const ConfirmTicket = () => {
     }
 
     // navigate(`/`);
+  };
+
+  const handleCancelTicket = () => {
+    confirmAlert({
+      title: "Xác nhận",
+      message: "Bạn chắc chắn muốn huỷ vé chứ?",
+      buttons: [
+        {
+          label: "Đồng ý",
+          onClick: () => {
+            // Xử lý khi người dùng nhấn nút "Đồng ý"
+            // console.log("Người dùng đã đồng ý");
+            navigate(`/`);
+          },
+        },
+        {
+          label: "Hủy",
+          onClick: () => {
+            // Xử lý khi người dùng nhấn nút "Hủy"
+            console.log("Người dùng đã hủy");
+          },
+        },
+      ],
+    });
   };
 
   // const handleListSeatPicked = () => {
@@ -134,7 +160,7 @@ const ConfirmTicket = () => {
                 <p></p>
               </div>
               <div>
-                <MDBBtn color="danger" onClick={handleBuyTicket}>
+                <MDBBtn color="danger" onClick={handleCancelTicket}>
                   Huỷ vé
                 </MDBBtn>
                 <MDBBtn
