@@ -19,7 +19,7 @@ export const apiRegisterUser = "/api/cus/Customer/Register";
 export const apiLoginUser = "/api/Customer/Login";
 
 // api get detail userinfo
-export const apiGetDetailUser = "/api/cus/Customer/GetMyInfo";
+export const apiGetDetailUser = "/api/Customer/GetMyInfo";
 
 // api update userinfo
 export const apiUpdateUserInfo = "/api/cus/Customer/EditMyInfo";
@@ -42,3 +42,9 @@ export const apiBuyTickets = "/api/Booking/CustomerBooking";
 
 // api get list gift
 export const apiGetGift = "/api/PolicyGifts/GetAll";
+
+// api get list gift for trade
+export const apiGetGiftTrade = "api/RedeemVoucher/RedeemVoucher";
+
+// api trade gift
+export const apiPostGiftTrade = "/api/RedeemVoucher/CreateRedeemVoucher";

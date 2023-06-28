@@ -17,11 +17,17 @@ import {
   MDBFile,
 } from "mdb-react-ui-kit";
 import _ from "lodash";
-import { handleLoginUser, handleSignUpUser } from "src/api/auth";
+import {
+  getDetailUserInfo,
+  handleLoginUser,
+  handleSignUpUser,
+} from "src/api/auth";
 // import { userInfoState } from "src/recoil/auth/atom";
 // import { useRecoilState } from "recoil";
 import Cookies from "universal-cookie";
 import { CookiesEnum } from "src/types/auth";
+import { useRecoilState } from "recoil";
+import { userInfoProfileState } from "src/recoil/userProfile/atom";
 
 interface IDataResgister {
   userName: string;
@@ -62,6 +68,8 @@ const LoginPage = () => {
   const [rePassWord, setRePassword] = useState<string>("");
   const [errorPW, setErrorPW] = useState<string>("");
   const [errorEmpty, setErrorEmpty] = useState<string>("");
+  const [_userInfoState, setUserInfoState] =
+    useRecoilState(userInfoProfileState);
 
   const handleJustifyClick = (value: string) => {
     if (value === justifyActive) {
@@ -105,6 +113,27 @@ const LoginPage = () => {
     }
   };
 
+  const handleGetDetailUserInfo = async () => {
+    const res = await getDetailUserInfo();
+
+    if (res.statusCode === 200) {
+      setUserInfoState(res.data);
+    } else {
+      setUserInfoState({
+        id: -1,
+        name: "",
+        image: "",
+        address: "",
+        phone: "",
+        doB: "",
+        sex: false,
+        email: "",
+        rankId: -1,
+        cusPoint: -1,
+      });
+    }
+  };
+
   const handleLogin = async () => {
     if (dataLogin.email !== "" && dataLogin.password !== "") {
       const res = await handleLoginUser(dataLogin);
@@ -112,8 +141,9 @@ const LoginPage = () => {
       console.log("res haha", res);
 
       if (res.statusCode === 200) {
-        alert("Đăng nhập thành công");
         cookies.set(CookiesEnum.USER_INFO, res.data);
+        await handleGetDetailUserInfo();
+        alert("Đăng nhập thành công");
         navigate("/homePage");
       } else {
         alert("Đăng nhập thất bại");
