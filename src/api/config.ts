@@ -16,7 +16,7 @@ export const apitest = "/cms/api/v1/name-shop-mall";
 export const apiRegisterUser = "/api/cus/Customer/Register";
 
 // login user
-export const apiLoginUser = "/api/cus/Customer/Login";
+export const apiLoginUser = "/api/Customer/Login";
 
 // api get detail userinfo
 export const apiGetDetailUser = "/api/cus/Customer/GetMyInfo";
