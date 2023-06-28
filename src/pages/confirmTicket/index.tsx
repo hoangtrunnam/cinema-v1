@@ -129,7 +129,22 @@ const ConfirmTicket = () => {
                 </div>
               </div> */}
             </div>
-            <MDBBtn onClick={handleBuyTicket}>Đặt vé</MDBBtn>
+            <div style={{ display: "flex", flex: 1 }}>
+              <div style={{ flex: 1 }}>
+                <p></p>
+              </div>
+              <div>
+                <MDBBtn color="danger" onClick={handleBuyTicket}>
+                  Huỷ vé
+                </MDBBtn>
+                <MDBBtn
+                  onClick={handleBuyTicket}
+                  style={{ marginLeft: "16px" }}
+                >
+                  Đặt vé
+                </MDBBtn>
+              </div>
+            </div>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
