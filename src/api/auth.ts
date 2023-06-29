@@ -22,6 +22,8 @@ interface IDataResgister {
   sex: string;
 }
 
+// helloworld
+
 export const handleSignUpUser = async (
   dataRegiser: IDataResgister
 ): Promise<ApiResponse<any>> => {
