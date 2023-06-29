@@ -98,7 +98,7 @@ const TradeVoucher = () => {
   const handleGetListGift = async () => {
     const res = await getListGift();
 
-    if (Array.isArray(res.data && res.data.length > 0)) {
+    if (Array.isArray(res.data) && res.data.length > 0) {
       setListGift(res.data);
     }
 
