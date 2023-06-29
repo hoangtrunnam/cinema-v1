@@ -72,7 +72,10 @@ const Cinema = (props: IProps) => {
                   className={clsx(
                     "seat",
                     isSelected && "selected",
-                    isOccupied && "occupied"
+                    isOccupied && "occupied",
+                    seat.status === 1 && "selected",
+                    seat.status === 0 && "seat",
+                    seat.status === 2 && "occupied"
                   )}
                   onClick={
                     isOccupied ? undefined : () => handleSelectedState(seat)
