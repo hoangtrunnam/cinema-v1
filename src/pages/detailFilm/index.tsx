@@ -201,7 +201,7 @@ const DetailFilm = () => {
                       setShowTimePicked(showTime);
                     }}
                   >
-                    {convertDayFromString(showTime.startTime)}
+                    {convertDayFromString(showTime.startTime, "HH:mm")}
                   </MDBBtn>
                 </div>
               );
