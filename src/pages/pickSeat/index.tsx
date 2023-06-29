@@ -18,6 +18,8 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { IGiftTraded } from "../TradeVoucher";
 import Card from "react-bootstrap/Card";
+import ToastMessage from "src/hooks/ToastMessage";
+import { toast } from "react-toastify";
 // import { useCookie } from "src/hooks/useCookie";
 // import { CookiesEnum, IUserLogin } from "src/types/auth";
 // import jwt from "jwt-decode";
@@ -60,6 +62,7 @@ const PickSeat = () => {
   const [listSeat, setListSeat] = useState<ISeat[]>([]);
   const [giftValue, setGiftValue] = useState<string>("");
   const [giftdata, setGiftData] = useState<IGiftTraded[]>([]);
+  const [isDisable, setIsDisable] = useState<boolean>(false);
 
   console.log("giftdata", giftdata);
 
@@ -106,6 +109,9 @@ const PickSeat = () => {
   const handleUseGift = (giftPicked: IGiftTraded) => {
     console.log(giftPicked);
     setgiftPicked(giftPicked);
+    toast(`Đã áp dụng ${giftPicked.giftName}`);
+    setIsDisable(true);
+
     // setItemGiftPicked(giftPicked);
   };
 
@@ -121,6 +127,7 @@ const PickSeat = () => {
 
   return (
     <div className="App">
+      <ToastMessage />
       <ShowCase />
       <Cinema
         selectedSeats={selectedSeats}
@@ -161,6 +168,7 @@ const PickSeat = () => {
               <Card.Body>
                 <Card.Title>{giftdata[0]?.giftName}</Card.Title>
                 <Button
+                  disabled={isDisable}
                   variant="primary"
                   onClick={() => handleUseGift(giftdata[0])}
                 >

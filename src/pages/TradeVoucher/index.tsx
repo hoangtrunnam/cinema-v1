@@ -153,14 +153,20 @@ const TradeVoucher = () => {
                   />
                   <Card.Body>
                     <Card.Title>{item?.giftName}</Card.Title>
-                    <div style={{ display: "flex" }}>
-                      <Card.Title style={{ paddingRight: "8px" }}>
-                        {item?.changeGiftCode}
-                      </Card.Title>
-                      <FaCopy
-                        onClick={() => handleCopyGiftCode(item?.changeGiftCode)}
-                      />
-                    </div>
+                    {item.usedStatus ? (
+                      <Card.Title>Gift đã được sử dụng</Card.Title>
+                    ) : (
+                      <div style={{ display: "flex" }}>
+                        <Card.Title style={{ paddingRight: "8px" }}>
+                          {item?.changeGiftCode}
+                        </Card.Title>
+                        <FaCopy
+                          onClick={() =>
+                            handleCopyGiftCode(item?.changeGiftCode)
+                          }
+                        />
+                      </div>
+                    )}
                   </Card.Body>
                 </Card>
               </div>
