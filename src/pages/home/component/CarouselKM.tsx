@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import Card from "react-bootstrap/Card";
 import { IGift } from "src/pages/TradeVoucher";
 import { getListGift } from "src/api/film";
+import { baseUrl } from "src/api/config";
 
 const responsive = {
   superLargeDesktop: {
@@ -69,7 +70,7 @@ const CarouselKM = () => {
               key={gift.id}
             >
               <Card style={{ width: "18rem" }}>
-                <Card.Img variant="top" src={gift.image} />
+                <Card.Img variant="top" src={`${baseUrl}/${gift.image}`} />
               </Card>
             </div>
           );
