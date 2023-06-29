@@ -14,6 +14,8 @@ export interface IUserInfoDetails {
   doB: string;
   sex: boolean;
   email: string;
+  rankId?: number;
+  cusPoint?: number;
 }
 
 export enum CookiesEnum {

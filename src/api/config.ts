@@ -40,6 +40,9 @@ export const apiCheckSeatPicked = "api/Booking/CustomerCheckTicket";
 // api buy tickets
 export const apiBuyTickets = "/api/Booking/CustomerBooking";
 
+// api cancel tickets
+export const apiCancelBookingTickets = "/api/Booking/CancelBooking";
+
 // api get list gift
 export const apiGetGift = "/api/PolicyGifts/GetAll";
 
@@ -48,3 +51,6 @@ export const apiGetGiftTrade = "api/RedeemVoucher/RedeemVoucher";
 
 // api trade gift
 export const apiPostGiftTrade = "/api/RedeemVoucher/CreateRedeemVoucher";
+
+// api update gift when finished buy tickets
+export const apiUpdateGiftTrade = "api/RedeemVoucher/UpdateRedeemVoucher";

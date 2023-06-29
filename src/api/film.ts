@@ -1,5 +1,6 @@
 import {
   apiBuyTickets,
+  apiCancelBookingTickets,
   apiCheckSeatPicked,
   apiGetAllFilm,
   apiGetAllSeatByShowTimeId,
@@ -7,6 +8,7 @@ import {
   apiGetGift,
   apiGetGiftTrade,
   apiPostGiftTrade,
+  apiUpdateGiftTrade,
 } from "./config";
 import { handleError } from "./handleError";
 import request from "./request";
@@ -128,16 +130,42 @@ export const handleApiBuyTicket = async (
   }
 };
 
-export const getListGift = async (): Promise<ApiResponse<any>> => {
+export const cancelBookingTicket = async (
+  listticket: number[]
+): Promise<ApiResponse<any>> => {
   try {
-    const res = await request().get(apiGetGift);
-    const { statusCode, data, code, message } = res.data;
+    const body = {
+      listticket,
+    };
+
+    const res = await request().post(`${apiCancelBookingTickets}`, body);
+
+    console.log("res", res);
+
+    // res dựa trên api response để define
+    const { status, data, code, message, statusCode } = res.data;
 
     return {
-      statusCode,
+      status,
       data,
       code,
       message,
+      statusCode,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getListGift = async (): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().get(apiGetGift);
+    const { data } = res;
+    const code = -1;
+
+    return {
+      data,
+      code,
     };
   } catch (error) {
     return handleError(error);
@@ -191,6 +219,29 @@ export const tradeGift = async (
       data,
       code,
       message,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const updateGiftCode = async (
+  ChangeGiftCode: string
+): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().post(
+      `${apiUpdateGiftTrade}?ChangeGiftCode=${ChangeGiftCode}`
+    );
+
+    console.log("res in api", res);
+    const { data, status } = res;
+
+    const code = -1;
+
+    return {
+      data,
+      code,
+      status,
     };
   } catch (error) {
     return handleError(error);

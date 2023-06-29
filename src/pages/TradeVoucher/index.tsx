@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/esm/Button";
-import { getListGiftForTrade, tradeGift } from "src/api/film";
+import { getListGift, getListGiftForTrade, tradeGift } from "src/api/film";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useRecoilValue } from "recoil";
 import { userInfoProfileState } from "src/recoil/userProfile/atom";
-interface IGift {
+import { baseUrl } from "src/api/config";
+import { useNavigate } from "react-router-dom";
+import { FaCopy } from "react-icons/fa6";
+import ToastMessage from "src/hooks/ToastMessage";
+import { toast } from "react-toastify";
+export interface IGiftTraded {
   id: number;
   changeGiftCode: any;
   phoneCus: string;
@@ -17,37 +22,58 @@ interface IGift {
   usedStatus: boolean;
 }
 
-const TradeVoucher = () => {
-  const userProfileState = useRecoilValue(userInfoProfileState);
+export interface IGift {
+  id: number;
+  giftName: string;
+  image: string;
+  point: number;
+  isStatus: boolean;
+  fromDate: string;
+  toDate: string;
+  description: string;
+}
 
-  console.log("hahaha", userProfileState);
+enum activeTabs {
+  myGift = "MY-GIFT",
+  tradedGift = "TRADED-GIFT",
+}
+
+const TradeVoucher = () => {
+  const navigate = useNavigate();
+  const userProfileState = useRecoilValue(userInfoProfileState);
+  const [listGift, setListGift] = useState<IGift[]>([]);
   const [itemGiftPicked, setItemGiftPicked] = useState<IGift>({
     id: -1,
-    changeGiftCode: null,
-    phoneCus: "",
     giftName: "",
-    giftId: -1,
-    giftPoint: -1,
-    cusId: -1,
-    usedStatus: false,
+    image: "",
+    point: -1,
+    isStatus: false,
+    fromDate: "",
+    toDate: "",
+    description: "",
   });
-  const [listGift, setListGift] = useState<IGift[]>([]);
+  const [activeTab, setActiveTab] = useState<activeTabs>(activeTabs.myGift);
+  const [listGiftTraded, setListGiftTraded] = useState<IGiftTraded[]>([]);
 
   const handleTradeGift = async (giftPicked: IGift) => {
-    const { id } = userProfileState;
+    const idUser = userProfileState?.id;
 
-    if (id !== -1) {
-      const { giftId, giftPoint } = giftPicked;
-      const res = await tradeGift(giftId, id, giftPoint);
+    if (idUser !== -1) {
+      const { id, point } = giftPicked;
+      const res = await tradeGift(id, idUser, point);
 
       console.log(res);
+      if (res.status === 200) {
+        navigate("/userProfile");
+      } else {
+        alert("co loi xay ra, vui long thu lai");
+      }
     } else {
       alert("có lỗi xảy ra, vui lòng đăng nhập lại");
       console.log("khong tim thay id cua nguoi dung");
     }
   };
 
-  console.log("listGift la:", listGift);
   const handleUseGift = (giftPicked: IGift) => {
     confirmAlert({
       title: "Xác nhận",
@@ -69,66 +95,141 @@ const TradeVoucher = () => {
     setItemGiftPicked(giftPicked);
   };
 
-  const handleGetGift = async () => {
-    const { id } = userProfileState;
+  const handleGetListGift = async () => {
+    const res = await getListGift();
 
-    if (id !== -1) {
-      const res = await getListGiftForTrade("", id);
+    if (Array.isArray(res.data && res.data.length > 0)) {
+      setListGift(res.data);
+    }
 
+    console.log("res list gift", res);
+  };
+
+  const handleTradedGift = async () => {
+    const idUser = userProfileState?.id;
+
+    if (idUser !== -1) {
+      const res = await getListGiftForTrade("", idUser); // list gift traded
+
+      console.log("list gift traded", res);
       if (
         res.status === 200 &&
         Array.isArray(res.data) &&
         res.data.length > 0
       ) {
-        console.log("run here");
-        setListGift(res.data);
+        setListGiftTraded(res.data);
       } else {
-        setListGift([]);
+        setListGiftTraded([]);
       }
-    } else {
-      alert("có lỗi xảy ra, vui lòng đăng nhập lại");
-      console.log("khong tim thay id cua nguoi dung");
     }
   };
 
+  const handleCopyGiftCode = (giftCode: string) => {
+    navigator.clipboard.writeText(giftCode);
+    toast(`Đã copy ${giftCode}`);
+  };
+
   useEffect(() => {
-    handleGetGift();
+    handleGetListGift();
+    handleTradedGift();
   }, []);
+
+  const TradedGift = () => {
+    return (
+      <div>
+        <div style={{ display: "flex" }}>
+          {listGiftTraded?.map((item: IGiftTraded) => {
+            return (
+              <div
+                key={item.id}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <Card style={{ width: "18rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src={
+                      "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
+                    }
+                  />
+                  <Card.Body>
+                    <Card.Title>{item?.giftName}</Card.Title>
+                    <div style={{ display: "flex" }}>
+                      <Card.Title style={{ paddingRight: "8px" }}>
+                        {item?.changeGiftCode}
+                      </Card.Title>
+                      <FaCopy
+                        onClick={() => handleCopyGiftCode(item?.changeGiftCode)}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const MyGift = () => {
+    return (
+      <div>
+        <div style={{ display: "flex" }}>
+          {listGift.slice(-4)?.map((item: IGift) => {
+            return (
+              <div
+                key={item.id}
+                style={{ paddingLeft: "8px", paddingRight: "8px" }}
+              >
+                <Card style={{ width: "18rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src={
+                      `${baseUrl}/${item.image}` ||
+                      "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
+                    }
+                  />
+                  <Card.Body>
+                    <Card.Title>{item?.giftName}</Card.Title>
+                    <Card.Text>{item?.description}</Card.Text>
+                    <Button
+                      variant={
+                        item?.id === itemGiftPicked.id ? "primary" : "dark"
+                      }
+                      onClick={() => handleUseGift(item)}
+                    >
+                      Đổi quà
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div>
-      <h3>Quà tặng của bạn</h3>
-      <div style={{ display: "flex" }}>
-        {listGift.slice(-4)?.map((item: IGift) => {
-          return (
-            <div
-              key={item.id}
-              style={{ paddingLeft: "8px", paddingRight: "8px" }}
-            >
-              <Card style={{ width: "18rem" }}>
-                <Card.Img
-                  variant="top"
-                  src={
-                    "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
-                  }
-                />
-                <Card.Body>
-                  <Card.Title>{item?.giftName}</Card.Title>
-                  {/* <Card.Text>{item?.description}</Card.Text> */}
-                  <Button
-                    variant={
-                      item?.id === itemGiftPicked.id ? "primary" : "dark"
-                    }
-                    onClick={() => handleUseGift(item)}
-                  >
-                    Đổi quà
-                  </Button>
-                </Card.Body>
-              </Card>
-            </div>
-          );
-        })}
+      <ToastMessage />
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <Button
+          style={{ fontSize: "24px" }}
+          variant="link"
+          onClick={() => setActiveTab(activeTabs.myGift)}
+        >
+          Quà tặng của bạn
+        </Button>
+        <Button
+          style={{ fontSize: "24px" }}
+          variant="link"
+          onClick={() => setActiveTab(activeTabs.tradedGift)}
+        >
+          Quà tặng Đã đổi
+        </Button>
       </div>
+      {activeTab === activeTabs.myGift ? <MyGift /> : <TradedGift />}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Cinema from "./components/Cinema";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getListGift,
+  getListGiftForTrade,
   getListSeatByShowTimeId,
   handleCheckSeatPicked,
 } from "src/api/film";
@@ -14,6 +15,9 @@ import {
   giftPickedState,
   listSeatPickedState,
 } from "src/recoil/filmChoosed/atom";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import { IGiftTraded } from "../TradeVoucher";
 import Card from "react-bootstrap/Card";
 // import { useCookie } from "src/hooks/useCookie";
 // import { CookiesEnum, IUserLogin } from "src/types/auth";
@@ -39,49 +43,6 @@ export interface IFood {
   description: string;
 }
 
-const arrFoodGift: IFood[] = [
-  {
-    id: 1,
-    giftName: "cocacola",
-    image: "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png",
-    point: 30,
-    isStatus: true,
-    fromDate: "2022-01-02",
-    toDate: "2022-01-02",
-    description: "mat lanh sang khoai tuyet voi",
-  },
-  {
-    id: 2,
-    giftName: "cocacola2",
-    image: "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png",
-    point: 30,
-    isStatus: true,
-    fromDate: "2022-01-02",
-    toDate: "2022-01-02",
-    description: "mat lanh sang khoai tuyet voi",
-  },
-  {
-    id: 3,
-    giftName: "cocacola3",
-    image: "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png",
-    point: 30,
-    isStatus: true,
-    fromDate: "2022-01-02",
-    toDate: "2022-01-02",
-    description: "mat lanh sang khoai tuyet voi",
-  },
-  {
-    id: 4,
-    giftName: "cocacola4",
-    image: "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png",
-    point: 30,
-    isStatus: true,
-    fromDate: "2022-01-02",
-    toDate: "2022-01-02",
-    description: "mat lanh sang khoai tuyet voi",
-  },
-];
-
 const PickSeat = () => {
   // const { idShowTime } = state;
   // const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
@@ -98,16 +59,10 @@ const PickSeat = () => {
 
   const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
   const [listSeat, setListSeat] = useState<ISeat[]>([]);
-  const [itemGiftPicked, setItemGiftPicked] = useState<IFood>({
-    id: -1,
-    giftName: "",
-    image: "",
-    point: -1,
-    isStatus: false,
-    fromDate: "",
-    toDate: "",
-    description: "",
-  });
+  const [giftValue, setGiftValue] = useState<string>("");
+  const [giftdata, setGiftData] = useState<IGiftTraded[]>([]);
+
+  console.log("giftdata", giftdata);
 
   console.log("selectedSeats", selectedSeats);
 
@@ -131,13 +86,7 @@ const PickSeat = () => {
 
     console.log("this is res check seat", res);
     setListSeatPicked(selectedSeats);
-    setgiftPicked(itemGiftPicked);
     navigate(`/confirm-ticket`);
-  };
-
-  const handleUseGift = (foodPicked: IFood) => {
-    console.log(foodPicked);
-    setItemGiftPicked(foodPicked);
   };
 
   // const handleNavigateToSelectFood = () => {
@@ -150,6 +99,26 @@ const PickSeat = () => {
 
     console.log("res list gift", res);
   };
+
+  const handleGetGiftByGiftCode = async () => {
+    const res = await getListGiftForTrade(giftValue); // chỉ truyền gift code vào để lấy ra gift
+
+    console.log("handleGetGiftByGiftCode", res);
+    if (res.status === 200 && Array.isArray(res.data) && res.data.length > 0) {
+      setGiftData(res.data);
+    } else {
+      setGiftData([]);
+    }
+  };
+  const handleUseGift = (giftPicked: IGiftTraded) => {
+    console.log(giftPicked);
+    setgiftPicked(giftPicked);
+    // setItemGiftPicked(giftPicked);
+  };
+
+  useEffect(() => {
+    handleGetGiftByGiftCode();
+  }, [giftValue]);
 
   useEffect(() => {
     handleGetListSeatByShowTimeId();
@@ -175,37 +144,38 @@ const PickSeat = () => {
         </span>
       </p>
 
-      <h3>Quà tặng của bạn</h3>
-      <h3>chỉ được chọn 1 món</h3>
+      <InputGroup className="mb-3" style={{ width: "20%" }}>
+        <InputGroup.Text>Gift code</InputGroup.Text>
+        <Form.Control
+          aria-label=""
+          onChange={(e) => {
+            setGiftValue(e.target.value);
+          }}
+        />
+      </InputGroup>
+
       <div style={{ display: "flex" }}>
-        {arrFoodGift?.map((item: IFood) => {
-          return (
-            <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
-              <Card style={{ width: "18rem" }}>
-                <Card.Img
-                  variant="top"
-                  src={
-                    item?.image ||
-                    "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
-                  }
-                />
-                <Card.Body>
-                  <Card.Title>{item?.giftName}</Card.Title>
-                  <Card.Text>{item?.description}</Card.Text>
-                  <Button
-                    variant={
-                      item?.id === itemGiftPicked.id ? "primary" : "dark"
-                    }
-                    onClick={() => handleUseGift(item)}
-                  >
-                    Áp dụng
-                  </Button>
-                </Card.Body>
-              </Card>
-            </div>
-          );
-        })}
+        <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
+          <Card style={{ width: "18rem" }}>
+            <Card.Img
+              variant="top"
+              src={
+                "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
+              }
+            />
+            <Card.Body>
+              <Card.Title>{giftdata[0]?.giftName}</Card.Title>
+              <Button
+                variant="primary"
+                onClick={() => handleUseGift(giftdata[0])}
+              >
+                Áp dụng
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
       </div>
+
       <div>
         <Button
           variant="success"

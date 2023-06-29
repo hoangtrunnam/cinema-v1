@@ -30,6 +30,8 @@ const UserProfile = () => {
     doB: "",
     sex: false,
     email: "",
+    rankId: -1,
+    cusPoint: -1,
   });
 
   const handleUpdateProfile = async () => {
@@ -75,6 +77,7 @@ const UserProfile = () => {
         doB: "",
         sex: false,
         email: "",
+        rankId: -1,
       });
     }
   }, []);
@@ -102,6 +105,17 @@ const UserProfile = () => {
     }
   };
 
+  const handleCheckRank = (rankId: number | undefined) => {
+    if (rankId === undefined || rankId === -1) {
+      return "Không có hạng";
+    } else {
+      if (rankId === 1) return "Hạng Bạc";
+      if (rankId === 2) return "Hạng Vàng";
+      if (rankId === 3) return "Hạng Kim Cương";
+    }
+    return "";
+  };
+
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -121,7 +135,12 @@ const UserProfile = () => {
                   fluid
                 />
                 <p className="text-muted mb-1">{userInfo.name}</p>
-                <p className="text-muted mb-4">Thành viên hạng vàng</p>
+                <p className="text-muted mb-4">
+                  {handleCheckRank(userInfo.rankId)}
+                </p>
+                <p className="text-muted mb-4">
+                  Điểm tích luỹ: {userInfo.cusPoint}
+                </p>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

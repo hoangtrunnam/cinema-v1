@@ -15,7 +15,11 @@ import {
   giftPickedState,
   listSeatPickedState,
 } from "src/recoil/filmChoosed/atom";
-import { handleApiBuyTicket } from "src/api/film";
+import {
+  cancelBookingTicket,
+  handleApiBuyTicket,
+  updateGiftCode,
+} from "src/api/film";
 import { ISeat } from "../pickSeat";
 import jwt from "jwt-decode";
 import { getToken } from "src/api/core";
@@ -29,8 +33,29 @@ const ConfirmTicket = () => {
   const navigate = useNavigate();
 
   console.log("filmChoosed:", filmChoosed);
-  console.log("filmChoosed:", listSeatPicked);
+  console.log("listSeatPicked:", listSeatPicked);
   console.log("giftPicked", giftPicked);
+
+  const handleUpdateGiftcode = async (): Promise<boolean> => {
+    const res = await updateGiftCode(giftPicked?.changeGiftCode);
+
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleCancelTicketApi = async () => {
+    const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
+    const res = await cancelBookingTicket(listIdSeatPicked);
+
+    if (res.data && res.statusCode === 200) {
+      navigate(`/`);
+    } else {
+      // do nothing
+    }
+  };
 
   const handleBuyTicket = async () => {
     const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
@@ -38,15 +63,41 @@ const ConfirmTicket = () => {
 
     if (user && user?.nameid) {
       console.log("user:", user);
-      const res = await handleApiBuyTicket(user?.nameid, listIdSeatPicked);
+      const res = await handleApiBuyTicket(user?.nameid, listIdSeatPicked); // name is này liệu có trùng với id ở recoil state?
 
       console.log("res sau khi click buy ticket", res);
       if (res.data) {
-        alert("Đặt vé thành công");
+        const isUpdateGiftCodeSuccess = await handleUpdateGiftcode();
+
+        if (isUpdateGiftCodeSuccess) {
+          alert("Đặt vé thành công");
+        } else {
+          alert("Có lỗi xảy ra, vui lòng thử lại");
+        }
       }
     } else {
       alert("bạn chưa đăng nhập, vui lòng đăng nhập để tiếp tục");
-      navigate(`/login`);
+      confirmAlert({
+        title: "Xác nhận",
+        message: "bạn chưa đăng nhập, vui lòng đăng nhập để tiếp tục",
+        buttons: [
+          {
+            label: "Đồng ý",
+            onClick: () => {
+              // Xử lý khi người dùng nhấn nút "Đồng ý"
+              // console.log("Người dùng đã đồng ý");
+              navigate(`/login`);
+            },
+          },
+          {
+            label: "Hủy",
+            onClick: () => {
+              // Xử lý khi người dùng nhấn nút "Hủy"
+              console.log("Người dùng đã hủy");
+            },
+          },
+        ],
+      });
     }
 
     // navigate(`/`);
@@ -59,11 +110,7 @@ const ConfirmTicket = () => {
       buttons: [
         {
           label: "Đồng ý",
-          onClick: () => {
-            // Xử lý khi người dùng nhấn nút "Đồng ý"
-            // console.log("Người dùng đã đồng ý");
-            navigate(`/`);
-          },
+          onClick: () => handleCancelTicketApi(),
         },
         {
           label: "Hủy",
