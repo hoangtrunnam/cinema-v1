@@ -156,7 +156,7 @@ const PickSeat = () => {
         />
       </InputGroup>
 
-      {giftValue ? (
+      {giftdata.length > 0 ? (
         <div style={{ display: "flex" }}>
           <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
             <Card style={{ width: "18rem" }}>
