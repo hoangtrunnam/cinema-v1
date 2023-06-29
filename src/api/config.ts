@@ -13,7 +13,7 @@ export const timeout = 30000;
 export const apitest = "/cms/api/v1/name-shop-mall";
 
 // resgister user
-export const apiRegisterUser = "/api/cus/Customer/Register";
+export const apiRegisterUser = "/api/Customer/Register";
 
 // login user
 export const apiLoginUser = "/api/Customer/Login";
