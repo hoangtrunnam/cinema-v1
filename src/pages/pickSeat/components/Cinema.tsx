@@ -78,7 +78,9 @@ const Cinema = (props: IProps) => {
                     seat.status === 2 && "occupied"
                   )}
                   onClick={
-                    isOccupied ? undefined : () => handleSelectedState(seat)
+                    isOccupied || seat.status === 1 || seat.status === 2
+                      ? undefined
+                      : () => handleSelectedState(seat)
                   }
                 />
                 {/* van chay ok */}
