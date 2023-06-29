@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Card from "react-bootstrap/Card";
+import { IGift } from "src/pages/TradeVoucher";
+import { getListGift } from "src/api/film";
 
 const responsive = {
   superLargeDesktop: {
@@ -23,65 +25,22 @@ const responsive = {
   },
 };
 
-interface IListFilm {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
-}
-const listFilm: IListFilm[] = [
-  {
-    id: 1,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002679?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 2,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002629?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 3,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 4,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 5,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 6,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-
-  {
-    id: 7,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-  {
-    id: 8,
-    src: "https://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002640?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500",
-    alt: "1 slide",
-    title: "CATS IN THE MUSEUM",
-  },
-];
-
 const CarouselKM = () => {
+  const [listGift, setListGift] = useState<IGift[]>([]);
+  const handleGetListGift = async () => {
+    const res = await getListGift();
+
+    if (Array.isArray(res.data) && res.data.length > 0) {
+      setListGift(res.data);
+    }
+
+    console.log("res list gift", res);
+  };
+
+  useEffect(() => {
+    handleGetListGift();
+  }, []);
+
   return (
     <div style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Carousel
@@ -100,17 +59,17 @@ const CarouselKM = () => {
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
       >
-        {listFilm.map((film) => {
+        {listGift.map((gift) => {
           return (
             <div
               style={{
                 flex: 1,
                 marginLeft: "23%",
               }}
-              key={film.id}
+              key={gift.id}
             >
               <Card style={{ width: "18rem" }}>
-                <Card.Img variant="top" src={film.src} />
+                <Card.Img variant="top" src={gift.image} />
               </Card>
             </div>
           );

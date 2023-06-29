@@ -6,39 +6,6 @@ import CarouselKM from "./component/CarouselKM";
 import { getListFilm } from "src/api/film";
 import { useRecoilState } from "recoil";
 import { listAllFilmState } from "src/recoil/film/atom";
-// interface IListCarouselBanner {
-//   id: number;
-//   src: string;
-//   alt: string;
-// }
-
-// const listCarouselBanner: IListCarouselBanner[] = [
-//   {
-//     id: 1,
-//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-10.jpg",
-//     alt: "1 slide",
-//   },
-//   {
-//     id: 2,
-//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-8.jpg",
-//     alt: "2 slide",
-//   },
-//   {
-//     id: 3,
-//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/1920x1080-1-9.jpg",
-//     alt: "3 slide",
-//   },
-//   {
-//     id: 4,
-//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/MUANHIEUTRUNGLON-WEB-1920X1080-1.jpeg",
-//     alt: "4 slide",
-//   },
-//   {
-//     id: 5,
-//     src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/Visa-x-BHD-WEB.jpg",
-//     alt: "5 slide",
-//   },
-// ];
 
 const HomePage = () => {
   // const navigate = useNavigate();
@@ -94,18 +61,6 @@ const HomePage = () => {
         >
           PHIM ĐANG CHIẾU
         </h3>
-        <h3
-          style={{ cursor: "pointer", color: "black", paddingRight: "16px" }}
-          onMouseEnter={(e: React.MouseEvent<HTMLHeadingElement>) =>
-            ((e.target as HTMLHeadingElement).style.color = "#d4dd29")
-          }
-          onMouseLeave={(e: React.MouseEvent<HTMLHeadingElement>) =>
-            ((e.target as HTMLHeadingElement).style.color = "black")
-          }
-          onClick={() => setTypeFilm("inComing")}
-        >
-          PHIM SẮP CHIẾU
-        </h3>
       </div>
       {typeFile === "playing" ? (
         <CarouselFilm listFilm={listFilm} />
@@ -133,20 +88,8 @@ const HomePage = () => {
         >
           KHUYẾN MÃI
         </h3>
-        <h3
-          style={{ cursor: "pointer", color: "black", paddingRight: "16px" }}
-          onMouseEnter={(e: React.MouseEvent<HTMLHeadingElement>) =>
-            ((e.target as HTMLHeadingElement).style.color = "#d4dd29")
-          }
-          onMouseLeave={(e: React.MouseEvent<HTMLHeadingElement>) =>
-            ((e.target as HTMLHeadingElement).style.color = "black")
-          }
-          onClick={() => setTypeKM("SK")}
-        >
-          SỰ KIỆN
-        </h3>
       </div>
-      {typeKM === "KM" ? <CarouselKM /> : <CarouselKM />}
+      {typeKM === "KM" ? <CarouselKM /> : null}
     </div>
   );
 };
