@@ -4,7 +4,6 @@ import ShowCase from "./components/ShowCase";
 import Cinema from "./components/Cinema";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  getListGift,
   getListGiftForTrade,
   getListSeatByShowTimeId,
   handleCheckSeatPicked,
@@ -94,12 +93,6 @@ const PickSeat = () => {
   //   navigate(`/confirm-ticket`);
   // };
 
-  const handleGetListGift = async () => {
-    const res = await getListGift();
-
-    console.log("res list gift", res);
-  };
-
   const handleGetGiftByGiftCode = async () => {
     const res = await getListGiftForTrade(giftValue); // chỉ truyền gift code vào để lấy ra gift
 
@@ -124,7 +117,6 @@ const PickSeat = () => {
 
   useEffect(() => {
     handleGetListSeatByShowTimeId();
-    handleGetListGift();
   }, []);
 
   return (

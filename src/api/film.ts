@@ -212,13 +212,14 @@ export const tradeGift = async (
     console.log("res", res);
 
     // res dựa trên api response để define
-    const { status, data, code, message } = res.data;
+    const { status, data } = res;
+
+    const code = -1;
 
     return {
       status,
       data,
       code,
-      message,
     };
   } catch (error) {
     return handleError(error);

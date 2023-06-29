@@ -64,7 +64,7 @@ const TradeVoucher = () => {
 
       console.log(res);
       if (res.status === 200) {
-        navigate("/userProfile");
+        setActiveTab(activeTabs.tradedGift);
       } else {
         alert("co loi xay ra, vui long thu lai");
       }
