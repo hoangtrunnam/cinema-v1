@@ -45,7 +45,7 @@ const ConfirmTicket = () => {
 
   const totalMoney = useMemo(() => {
     const totalFoodPrice = listFoodPicked.reduce(
-      (acc, obj) => acc + obj.price,
+      (acc, obj) => acc + obj.price * obj.quantity,
       0
     );
     const totalPriceTicket = listSeatPicked.reduce(
@@ -96,7 +96,7 @@ const ConfirmTicket = () => {
 
   const handleBuyFood = async (): Promise<boolean> => {
     const totalFoodPrice = listFoodPicked.reduce(
-      (acc, obj) => acc + obj.price,
+      (acc, obj) => acc + obj.price * obj.quantity,
       0
     );
     const transactionId = await handleCreateTransaction();
@@ -269,11 +269,33 @@ const ConfirmTicket = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td>{giftPicked.giftName}</td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>0</td>
+                    <td>
+                      {listFoodPicked.map((food: IFoodDuck) => {
+                        return `${food.name},`;
+                      })}
+                    </td>
+                    <td>
+                      {listFoodPicked.reduce(
+                        (acc, obj) => acc + obj.price * obj.quantity,
+                        0
+                      )}
+                    </td>
+                    <td>{listFoodPicked.length}</td>
+                    <td>
+                      {listFoodPicked.reduce(
+                        (acc, obj) => acc + obj.price * obj.quantity,
+                        0
+                      )}
+                    </td>
                   </tr>
+                  {giftPicked.giftName ? (
+                    <tr>
+                      <td>{giftPicked.giftName}</td>
+                      <td>0</td>
+                      <td>1</td>
+                      <td>0</td>
+                    </tr>
+                  ) : null}
                   <tr>
                     <td></td>
                     <td></td>

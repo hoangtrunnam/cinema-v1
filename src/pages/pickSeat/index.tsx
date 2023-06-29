@@ -63,53 +63,7 @@ export interface IFoodDuck {
   id: number;
   quantity: any;
 }
-const listFood11 = [
-  {
-    name: "Bỏng phô mai",
-    description: "tan chảy trái tim bạn, ngọt vl",
-    price: 45000,
-    image: null,
-    isDeleted: false,
-    deleterUserId: null,
-    deletionTime: null,
-    lastModificationTime: null,
-    lastModifierUserId: null,
-    creationTime: "2023-06-29T21:18:45.2734909+07:00",
-    creatorUserId: null,
-    id: 3,
-    quantity: 0,
-  },
-  {
-    name: "Coca cola",
-    description: null,
-    price: 17000,
-    image: null,
-    isDeleted: false,
-    deleterUserId: null,
-    deletionTime: null,
-    lastModificationTime: null,
-    lastModifierUserId: null,
-    creationTime: "2023-06-29T21:18:45.2745231+07:00",
-    creatorUserId: null,
-    id: 4,
-    quantity: 0,
-  },
-  {
-    name: "Bắp luộc",
-    description: "siêu ngon",
-    price: 10000,
-    image: null,
-    isDeleted: false,
-    deleterUserId: null,
-    deletionTime: null,
-    lastModificationTime: null,
-    lastModifierUserId: null,
-    creationTime: "2023-06-29T21:18:45.2745254+07:00",
-    creatorUserId: null,
-    id: 5,
-    quantity: 0,
-  },
-];
+
 const PickSeat = () => {
   // const { idShowTime } = state;
   // const { dataCookie } = useCookie<IUserLogin>(CookiesEnum.USER_INFO);
@@ -132,7 +86,6 @@ const PickSeat = () => {
   const [giftdata, setGiftData] = useState<IGiftTraded[]>([]);
   const [isDisable, setIsDisable] = useState<boolean>(false);
   const [listFood, setListFood] = useState<IFoodDuck[]>([]);
-  const [listFood1, setListFood1] = useState<any[]>(listFood11);
 
   console.log("listFood", listFood);
 
@@ -158,7 +111,7 @@ const PickSeat = () => {
     const selectedSeatId = selectedSeats.map((item: ISeat) => item.id);
     const res = await handleCheckSeatPicked(selectedSeatId);
 
-    setFoodState(listFood1 as any);
+    setFoodState(listFood);
     if (res.data) {
       console.log("this is res check seat", res);
       setListSeatPicked(selectedSeats);
@@ -209,18 +162,18 @@ const PickSeat = () => {
   };
 
   const handleDecreaseQuantity = (index: number) => {
-    const tempArr = [...listFood1];
+    const tempArr = [...listFood];
 
     tempArr[index].quantity -= 1;
 
-    setListFood1(tempArr);
+    setListFood(tempArr);
   };
 
   const handleIncreaseQuantity = (index: number) => {
-    const tempArr = [...listFood1];
+    const tempArr = [...listFood];
 
     tempArr[index].quantity += 1;
-    setListFood1(tempArr);
+    setListFood(tempArr);
   };
 
   useEffect(() => {
@@ -294,7 +247,7 @@ const PickSeat = () => {
       </h4>
       <div style={{ overflow: "auto", maxWidth: "100%" }}>
         <div style={{ display: "flex" }}>
-          {listFood1?.map((item: any, index) => {
+          {listFood?.map((item: any, index) => {
             return (
               <div
                 key={item.id}
