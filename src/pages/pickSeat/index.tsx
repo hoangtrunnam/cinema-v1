@@ -156,27 +156,29 @@ const PickSeat = () => {
         />
       </InputGroup>
 
-      <div style={{ display: "flex" }}>
-        <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
-          <Card style={{ width: "18rem" }}>
-            <Card.Img
-              variant="top"
-              src={
-                "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
-              }
-            />
-            <Card.Body>
-              <Card.Title>{giftdata[0]?.giftName}</Card.Title>
-              <Button
-                variant="primary"
-                onClick={() => handleUseGift(giftdata[0])}
-              >
-                Áp dụng
-              </Button>
-            </Card.Body>
-          </Card>
+      {giftValue ? (
+        <div style={{ display: "flex" }}>
+          <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
+            <Card style={{ width: "18rem" }}>
+              <Card.Img
+                variant="top"
+                src={
+                  "https://www.bhdstar.vn/wp-content/uploads/2018/03/U22-web-1.png"
+                }
+              />
+              <Card.Body>
+                <Card.Title>{giftdata[0]?.giftName}</Card.Title>
+                <Button
+                  variant="primary"
+                  onClick={() => handleUseGift(giftdata[0])}
+                >
+                  Áp dụng
+                </Button>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div>
         <Button
