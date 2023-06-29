@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const CountdownTimer = () => {
-  const [seconds, setSeconds] = useState(100);
-  const navigate = useNavigate();
+  const [seconds, setSeconds] = useState(300);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,7 +10,6 @@ const CountdownTimer = () => {
 
     return () => {
       clearInterval(interval);
-      navigate(-1);
     }; // Xóa interval khi component bị unmount
   }, []);
 
