@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { IGiftTraded } from "src/pages/TradeVoucher";
-import { ISeat } from "src/pages/pickSeat";
+import { IFoodDuck, ISeat } from "src/pages/pickSeat";
 
 export interface IFilm {
   id: number;
@@ -50,4 +50,9 @@ export const giftPickedState = atom<IGiftTraded>({
     cusId: -1,
     usedStatus: false,
   },
+});
+
+export const foodPickedState = atom<IFoodDuck[]>({
+  key: "foodPickedState", // unique ID (with respect to other atoms/selectors)
+  default: [] as IFoodDuck[],
 });

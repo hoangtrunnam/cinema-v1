@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -12,29 +12,49 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   filmChooseState,
+  foodPickedState,
   giftPickedState,
   listSeatPickedState,
 } from "src/recoil/filmChoosed/atom";
 import {
+  buyFood,
   cancelBookingTicket,
+  createTransaction,
   handleApiBuyTicket,
   updateGiftCode,
 } from "src/api/film";
-import { ISeat } from "../pickSeat";
+import { IFoodDuck, ISeat } from "../pickSeat";
 import jwt from "jwt-decode";
 import { getToken } from "src/api/core";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { showTimePickedState } from "src/recoil/film/atom";
 
 const ConfirmTicket = () => {
   const filmChoosed = useRecoilValue(filmChooseState);
   const listSeatPicked = useRecoilValue(listSeatPickedState);
   const giftPicked = useRecoilValue(giftPickedState);
+  const listFoodPicked = useRecoilValue(foodPickedState);
+  const showTimePicked = useRecoilValue(showTimePickedState);
+
   const navigate = useNavigate();
 
   console.log("filmChoosed:", filmChoosed);
   console.log("listSeatPicked:", listSeatPicked);
   console.log("giftPicked", giftPicked);
+
+  const totalMoney = useMemo(() => {
+    const totalFoodPrice = listFoodPicked.reduce(
+      (acc, obj) => acc + obj.price,
+      0
+    );
+    const totalPriceTicket = listSeatPicked.reduce(
+      (acc, obj) => acc + obj.price,
+      0
+    );
+
+    return totalFoodPrice + totalPriceTicket;
+  }, [listSeatPicked.length, listFoodPicked.length]);
 
   const handleUpdateGiftcode = async (): Promise<boolean> => {
     const res = await updateGiftCode(giftPicked?.changeGiftCode);
@@ -57,19 +77,70 @@ const ConfirmTicket = () => {
     }
   };
 
-  const handleBuyTicket = async () => {
-    const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
+  const handleCreateTransaction = async (): Promise<number> => {
     const user: any = jwt(await getToken());
 
     if (user && user?.nameid) {
+      const res = await createTransaction(user?.nameid);
+
+      if (res.data > 0) {
+        return res.data;
+      } else {
+        return -1;
+      }
+    } else {
+      alert("Không tìm thấy thông tin người dùng");
+      return -1;
+    }
+  };
+
+  const handleBuyFood = async (): Promise<boolean> => {
+    const totalFoodPrice = listFoodPicked.reduce(
+      (acc, obj) => acc + obj.price,
+      0
+    );
+    const transactionId = await handleCreateTransaction();
+
+    const listFoodPickedTemp = listFoodPicked.map((food: IFoodDuck) => ({
+      quantity: food.quantity,
+      foodId: food.id,
+    }));
+    const res = await buyFood(
+      totalFoodPrice,
+      transactionId,
+      listFoodPickedTemp
+    );
+
+    if (res.statusCode === 200 && res.data) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleBuyTicket = async () => {
+    const listIdSeatPicked = listSeatPicked.map((item: ISeat) => item.id);
+    const totalPriceTicket = listSeatPicked.reduce(
+      (acc, obj) => acc + obj.price,
+      0
+    );
+    const user: any = jwt(await getToken());
+    const transactionId = await handleCreateTransaction();
+    const isBuyFood = await handleBuyFood();
+
+    if (user && user?.nameid) {
       console.log("user:", user);
-      const res = await handleApiBuyTicket(user?.nameid, listIdSeatPicked); // name is này liệu có trùng với id ở recoil state?
+      const res = await handleApiBuyTicket(
+        totalPriceTicket,
+        transactionId,
+        listIdSeatPicked
+      );
 
       console.log("res sau khi click buy ticket", res);
       if (res.data) {
         const isUpdateGiftCodeSuccess = await handleUpdateGiftcode();
 
-        if (isUpdateGiftCodeSuccess) {
+        if (isUpdateGiftCodeSuccess && isBuyFood) {
           alert("Đặt vé thành công");
         } else {
           alert("Có lỗi xảy ra, vui lòng thử lại");
@@ -156,15 +227,21 @@ const ConfirmTicket = () => {
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Suất: &nbsp;</p>
-              <p className="text-left">15:40 - Rạp số xxxx</p>
+              <p className="text-left">{showTimePicked.startTime}</p>
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Ghế: &nbsp;</p>
-              <p className="text-left">c1 ,c2</p>
+              {listSeatPicked.map((item: ISeat) => {
+                return (
+                  <p className="text-left" key={item.id}>
+                    {item.location}
+                  </p>
+                );
+              })}
             </div>
             <div style={{ display: "flex" }}>
               <p className="text-left">Thành tiền: &nbsp;</p>
-              <p className="text-left">365,000 VND</p>
+              <p className="text-left">{totalMoney}</p>
             </div>
             <div>
               <Table striped bordered hover variant="light">
@@ -178,10 +255,18 @@ const ConfirmTicket = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Adult-Stand-2D</td>
-                    <td>65,000</td>
-                    <td>1</td>
-                    <td>65,000</td>
+                    <td>
+                      {listSeatPicked.map((seat: ISeat) => {
+                        return `${seat.location},`;
+                      })}
+                    </td>
+                    <td>
+                      {listSeatPicked.reduce((acc, obj) => acc + obj.price, 0)}
+                    </td>
+                    <td>{listSeatPicked.length}</td>
+                    <td>
+                      {listSeatPicked.reduce((acc, obj) => acc + obj.price, 0)}
+                    </td>
                   </tr>
                   <tr>
                     <td>{giftPicked.giftName}</td>
@@ -193,7 +278,7 @@ const ConfirmTicket = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>65,000</td>
+                    <td>{totalMoney}</td>
                   </tr>
                 </tbody>
               </Table>

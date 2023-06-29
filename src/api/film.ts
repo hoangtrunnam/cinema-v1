@@ -1,12 +1,15 @@
 import {
+  apiBuyFood,
   apiBuyTickets,
   apiCancelBookingTickets,
   apiCheckSeatPicked,
+  apiCreateTransaction,
   apiGetAllFilm,
   apiGetAllSeatByShowTimeId,
   apiGetAllShowTimeByDate,
   apiGetGift,
   apiGetGiftTrade,
+  apiGetListFood,
   apiPostGiftTrade,
   apiUpdateGiftTrade,
 } from "./config";
@@ -104,7 +107,8 @@ export const handleCheckSeatPicked = async (
 };
 
 export const handleApiBuyTicket = async (
-  cusId: number,
+  money: number,
+  magiaodich: number,
   listticket: number[]
 ): Promise<ApiResponse<any>> => {
   try {
@@ -112,7 +116,10 @@ export const handleApiBuyTicket = async (
       listticket,
     };
 
-    const res = await request().post(`${apiBuyTickets}?${cusId}`, body);
+    const res = await request().post(
+      `${apiBuyTickets}?money=${money}&magiaodich=${magiaodich}`,
+      body
+    );
 
     console.log("res", res);
 
@@ -243,6 +250,78 @@ export const updateGiftCode = async (
       data,
       code,
       status,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getListFood = async (): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().get(apiGetListFood);
+    const { data } = res;
+    const code = -1;
+
+    return {
+      data,
+      code,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const createTransaction = async (
+  cusId: string
+): Promise<ApiResponse<any>> => {
+  try {
+    const res = await request().post(`${apiCreateTransaction}?cusId=${cusId}`);
+
+    console.log("res in api", res);
+    const { data, status } = res;
+
+    const code = -1;
+
+    return {
+      data,
+      code,
+      status,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+interface IFoodPost {
+  foodId: number;
+  quantity: number;
+}
+
+export const buyFood = async (
+  totalfoodmoney: number,
+  magiaodich: number,
+  listfood: IFoodPost[]
+): Promise<ApiResponse<any>> => {
+  try {
+    const body = {
+      listfood,
+    };
+
+    const res = await request().post(
+      `${apiBuyFood}?totalfoodmoney=${totalfoodmoney}&magiaodich=${magiaodich}`,
+      body
+    );
+
+    console.log("res in api", res);
+    const { data, status, statusCode } = res.data;
+
+    const code = -1;
+
+    return {
+      data,
+      code,
+      status,
+      statusCode,
     };
   } catch (error) {
     return handleError(error);

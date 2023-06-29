@@ -13,10 +13,11 @@ import {
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { IAllFilm } from "src/recoil/film/atom";
+import { IAllFilm, showTimePickedState } from "src/recoil/film/atom";
 import { getListFilm, getListShowTimeByDate } from "src/api/film";
 import { IShowTime } from "./type";
 import { convertDayFromString } from "src/hooks/time";
+import { useRecoilState } from "recoil";
 
 const DetailFilm = () => {
   const [date, setDate] = useState(new Date());
@@ -24,6 +25,7 @@ const DetailFilm = () => {
   const [listShowTime, setListShowTime] = useState<IShowTime[]>([]);
   const navigate = useNavigate();
   const { idFilm } = useParams();
+  const [_showTime, setShowTimePicked] = useRecoilState(showTimePickedState);
 
   const film = listFilm.find((film) => {
     if (idFilm !== undefined) {
@@ -194,7 +196,10 @@ const DetailFilm = () => {
                 >
                   <MDBBtn
                     color="info"
-                    onClick={() => handleChooseSeat(showTime.id)}
+                    onClick={() => {
+                      handleChooseSeat(showTime.id);
+                      setShowTimePicked(showTime);
+                    }}
                   >
                     {convertDayFromString(showTime.startTime)}
                   </MDBBtn>

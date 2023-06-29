@@ -4,5 +4,5 @@ export interface IShowTime {
   time: any;
   movieName: string;
   roomName: string;
-  id: 2;
+  id: number;
 }

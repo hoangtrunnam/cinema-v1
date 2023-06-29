@@ -54,3 +54,12 @@ export const apiPostGiftTrade = "/api/RedeemVoucher/CreateRedeemVoucher";
 
 // api update gift when finished buy tickets
 export const apiUpdateGiftTrade = "api/RedeemVoucher/UpdateRedeemVoucher";
+
+// api get list food
+export const apiGetListFood = "api/MstFood/GetAll";
+
+// api create transaction
+export const apiCreateTransaction = "/api/Booking/CreateTransaction";
+
+// api buy food
+export const apiBuyFood = "Booking/CustomerBookFood";
