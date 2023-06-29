@@ -52,24 +52,9 @@ const HeaderComponent = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link onClick={handleNavigateToHome}>Home</Nav.Link>
             <Nav.Link onClick={handleTradeVoucher}>Đổi voucher</Nav.Link>
             <NavDropdown title="Menu" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Lịch chiếu</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Hệ Thống Rạp
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">
-                Khuyến mãi | Sự kiện
-              </NavDropdown.Item>
-              {/* <NavDropdown.Divider /> */}
-              <NavDropdown.Item href="#action/3.4">
-                Dịch vụ quảng cáo
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.5">Tuyển dụng</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.6">
-                Về chúng tôi
-              </NavDropdown.Item>
               <NavDropdown.Item onClick={handleNavigateMemberRule}>
                 Quy định thành viên
               </NavDropdown.Item>
