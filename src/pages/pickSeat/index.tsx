@@ -117,7 +117,9 @@ const PickSeat = () => {
   };
 
   useEffect(() => {
-    handleGetGiftByGiftCode();
+    if (giftValue !== "") {
+      handleGetGiftByGiftCode();
+    }
   }, [giftValue]);
 
   useEffect(() => {
