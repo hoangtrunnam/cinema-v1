@@ -7,7 +7,6 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { useRecoilValue } from "recoil";
 import { userInfoProfileState } from "src/recoil/userProfile/atom";
 import { baseUrl } from "src/api/config";
-import { useNavigate } from "react-router-dom";
 import { FaCopy } from "react-icons/fa6";
 import ToastMessage from "src/hooks/ToastMessage";
 import { toast } from "react-toastify";
@@ -39,7 +38,6 @@ enum activeTabs {
 }
 
 const TradeVoucher = () => {
-  const navigate = useNavigate();
   const userProfileState = useRecoilValue(userInfoProfileState);
   const [listGift, setListGift] = useState<IGift[]>([]);
   const [itemGiftPicked, setItemGiftPicked] = useState<IGift>({
@@ -136,7 +134,7 @@ const TradeVoucher = () => {
 
   const TradedGift = () => {
     return (
-      <div>
+      <div style={{ overflow: "auto", maxWidth: "100%" }}>
         <div style={{ display: "flex" }}>
           {listGiftTraded?.map((item: IGiftTraded) => {
             return (
@@ -173,9 +171,9 @@ const TradeVoucher = () => {
 
   const MyGift = () => {
     return (
-      <div>
+      <div style={{ overflow: "auto", maxWidth: "100%" }}>
         <div style={{ display: "flex" }}>
-          {listGift.slice(-4)?.map((item: IGift) => {
+          {listGift?.map((item: IGift) => {
             return (
               <div
                 key={item.id}
