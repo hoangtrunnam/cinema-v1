@@ -62,4 +62,4 @@ export const apiGetListFood = "api/MstFood/GetAll";
 export const apiCreateTransaction = "/api/Booking/CreateTransaction";
 
 // api buy food
-export const apiBuyFood = "Booking/CustomerBookFood";
+export const apiBuyFood = "/api/Booking/CustomerBookFood";
