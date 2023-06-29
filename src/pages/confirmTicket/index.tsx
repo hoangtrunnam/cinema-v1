@@ -29,6 +29,7 @@ import { getToken } from "src/api/core";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { showTimePickedState } from "src/recoil/film/atom";
+import CountdownTimer from "src/hooks/CountDownTimer";
 
 const ConfirmTicket = () => {
   const filmChoosed = useRecoilValue(filmChooseState);
@@ -212,7 +213,10 @@ const ConfirmTicket = () => {
       <MDBCol sm="6">
         <MDBCard>
           <MDBCardBody>
-            <MDBCardTitle>Giỏ hàng của bạn</MDBCardTitle>
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <MDBCardTitle>Giỏ hàng của bạn</MDBCardTitle>
+              <CountdownTimer />
+            </div>
             <MDBCardText>
               Quý khách vui lòng kiểm tra lại thông tin trước khi thanh toán
             </MDBCardText>
